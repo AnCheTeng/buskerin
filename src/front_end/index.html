@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>BuskerIn, coloring your life!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  <!-- <link rel="shortcut icon" href="../assets/ico/favicon.png"> -->
+  <link href='assets/css/origin.css' rel='stylesheet'>
+  <link href='assets/css/main.css' rel='stylesheet'>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <div class="navbar-wrapper">
+    <!-- Wrap the .navbar in .container-fluid to center it within the absolutely
+            positioned parent. -->
+    <div class="container-fluid">
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <!-- Responsive Navbar Part 1: Button for triggering responsive navbar
+                        (not covered in tutorial). Include responsive CSS to utilize. -->
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+
+          </button>
+          <a class="brand home" href="#" style="margin-top:3px">
+            <font size="6px" face="Agency FB">BuskerIn</font>
+          </a>
+          <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+          <div class="nav-collapse collapse" style="height: 0px;">
+            <ul class="nav">
+              <li class="">
+                <a href="#" class='home'>Home</a>
+              </li>
+              <li>
+                <a href="#" id='signup'>Sign Up</a>
+                <li></li>
+              </li>
+              <li>
+                <a href="#" id='busker'>Busker List</a>
+              </li>
+              <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Functions<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">Action</a>
+                  </li>
+                  <li>
+                    <a href="#">Another action</a>
+                  </li>
+                  <li>
+                    <a href="#">Something else here</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li>
+                    <a href="#">Separated link</a>
+                  </li>
+                  <li>
+                    <a href="#">One more separated link</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">Sign in</button>
+            </form>
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+        <!-- /.navbar-inner -->
+      </div>
+      <!-- /.navbar -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.navbar-wrapper -->
+
+  <script id="home-template" type="text/x-handlebars-template">
+    <!-- NAVBAR -->
+    <!-- Carousel -->
+    <div id="myCarousel1" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Finnish_bluegrass_buskers_Rautakoura,_Helsinki.jpg" alt="">
+          <div class="container-fluid">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+
+              <p class="lead">Hello world!</p>
+              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+            </div>
+          </div>
+        </div>
+        <div class="item active">
+          <img src="https://theweeklyminute.files.wordpress.com/2014/03/shane_francescut_bw_challenge-017.jpg" alt="">
+          <div class="container-fluid">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p class="lead">Hello world!</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://www.pxleyes.com/images/contests/inanimation-2/fullsize/Street-performer-4e06c914da802_hires.jpg" alt="">
+          <div class="container-fluid">
+            <div class="carousel-caption">
+              <h1>One more for good measure.</h1>
+
+              <p class="lead">Hello world!</p>
+              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel1" data-slide="prev">‹</a>
+      <a class="right carousel-control" href="#myCarousel1" data-slide="next">›</a>
+    </div>
+    <!-- /.carousel -->
+    <!-- Marketing messaging and featurettes -->
+    <!-- Wrap the rest of the page in another container-fluid to center all
+          the content. -->
+    <div class="container-fluid marketing">
+      <!-- Three columns of text below the carousel -->
+      <div class="row-fluid">
+        <div class="span4">
+          <h1>Creative Craft</h1>
+          <img class="img-circle" width="75%" src="https://img.nienie.tw/pixnet/c4fdfe821a3af8a7641d46d8663e3ee3.jpg">
+          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur
+            et.
+          </p>
+          <p>
+            <a class="btn btn-lg btn-warning" href="#">Find them! »</a>
+          </p>
+        </div>
+        <!-- /.span4 -->
+        <div class="span4">
+          <h1>Performance Arts</h1>
+          <img class="img-circle" width="75%" src="http://www.diabolokh.url.tw/diabolokh/images/photos/Celebrity/2011091420232294197.jpg">
+          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+            sit amet risus.</p>
+          <p>
+            <a class="btn btn-warning btn-lg" href="#">Find them! »</a>
+          </p>
+        </div>
+        <!-- /.span4 -->
+        <div class="span4">
+          <h1>Visual Arts</h1>
+          <img class="img-circle" width="75%" src="http://mychannel.pchome.com.tw/channel/class/show_preview.php3?d=2010-05-07&enname=wlwin&t=.jpg&fn=image&view=1">
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          </p>
+          <p>
+            <a class="btn btn-warning btn-lg" href="#">Find them! »</a>
+          </p>
+        </div>
+        <!-- /.span4 -->
+      </div>
+      <!-- /.row -->
+      <!-- START THE FEATURETTES -->
+      <hr class="featurette-divider">
+      <div class="featurette">
+        <img class="featurette-image img-rounded pull-right" src="http://www.allstar.org.tw/george/images/9710184.jpg">
+        <h2 class="featurette-heading">First featurette headling.
+          <span class="muted">It'll blow your mind.</span>
+        </h2>
+
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <hr class="featurette-divider">
+      <div class="featurette">
+        <img class="featurette-image img-rounded pull-left" src="http://tw.people.com.cn/mediafile/200604/07/F200604071630201296527800.jpg">
+        <h2 class="featurette-heading">Oh yeah, it's that good.
+          <span class="muted">See for yourself.</span>
+        </h2>
+
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>© 2016 IDCC, Inc. ·
+          <a href="#">Privacy</a>·
+          <a href="#">Terms</a>
+        </p>
+      </footer>
+    </div>
+  </script>
+  <script id="signup-template" type="text/x-handlebars-template">
+    <div class="container-fluid">
+      <div class="hero-unit" id="signup-hero" styel="">
+        <h1 align="center" style="margin-bottom:20px">Sign Up</h1>
+        <p align="center" class="">
+          <img class="img img-polaroid" src="http://www.centralpark.com/usr/photos/large/c6/central-park-street-performer.jpg" alt="Busker" width="80%">
+        </p>
+
+        <p align="center" class="">We need you!</p>
+      </div>
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span3">
+            <h2>Email</h2>
+          </div>
+          <div class="span4">
+            <input type="text" class="input-small">
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span3">
+            <h2>Password</h2>
+          </div>
+          <div class="span4">
+            <input type="password" class="input-small">
+          </div>
+        </div>
+        <div class="row-fluid">
+          <p><a class="btn btn-primary btn-large">Sign Up &raquo;</a></p>
+        </div>
+
+      </div>
+    </div>
+  </script>
+  <script id="busker-template" type="text/x-handlebars-template">
+    <div class="container-fluid">
+      <div class="busker hero-unit" id="{{name}}">
+        <h1 align="left" style="margin-bottom: 15px">{{name}}</h1>
+        <div class="container-fluid">
+          <div class="span4" style="height:300px">
+            <img align="middle" class="image img-polaroid" src="{{img}}" style="height:100%">
+          </div>
+          <div class="span6" style="height:300px" align="center">
+            <table class="table" style="margin-top: 5%; margin-bottom: 3%; margin-left: 1%; margin-right: 1%;">
+              <tbody>
+                <tr>
+                  <th>Category</th>
+                  <td class="">{{category}}</td>
+                </tr>
+                <tr>
+                  <th>Content</th>
+                  <td class="">{{content}}</td>
+                </tr>
+                <tr>
+                  <th>Facebook</th>
+                  <td><a href="{{fb}}">{{name}}</a></td>
+                </tr>
+                <tr>
+                  <th>Members</th>
+                  <td>{{members}}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{email}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <a class="btn btn-large btn-success" href="#{{name}}" onclick="alert('Add to MyFavorite!');">Like</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src='lib/handlebars-v4.0.5.js'></script>
+  <script src='js/main.js'></script>
+</body>
+
+</html>
