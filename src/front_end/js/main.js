@@ -34,6 +34,7 @@ var busker_instance_Wu = {
 var account_name = "";
 var account_email = "";
 var account_favorate_list = "";
+var context = "home";
 //======================== Global Variable ========================
 
 $(document).ready(function() {
@@ -41,16 +42,44 @@ $(document).ready(function() {
   var home_template = Handlebars.compile($("#home-template").html());
   var signup_template = Handlebars.compile($("#signup-template").html());
   var busker_template = Handlebars.compile($("#busker-template").html());
+  var search_template = Handlebars.compile($("#search-box-template").html());
 
-  $("body").append(home_template());
+  // $("body").append(home_template());
+
+  $("#signin").on('click', '#signin-btn', function() {
+    var email = $(".email").val();
+    var password = $(".password").val()
+
+    if ((email && password) != "") {
+      var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + email + '</b></font></a></li></ul>');
+      $(".nav-collapse").append(user);
+      $("#signin").remove();
+    } else {
+      alert("Please enter your email and password!");
+    }
+  });
 
   $(".home").click(function() {
+    context = "home";
+    $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
     $("body").append(home_template());
+    // Auto-Carousel
+    ! function($) {
+      $(function() {
+        // carousel demo
+        $('#myCarousel1').carousel()
+      })
+    }(window.jQuery)
+    // Auto-Carousel
   });
 
+  $(".home").trigger('click');
+
   $("#signup").click(function() {
+    context = "sign_up";
+    $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
     $("body").append(signup_template());
@@ -60,7 +89,7 @@ $(document).ready(function() {
       var password = $("#signup_password").val()
       var name = $("#signup_name").val()
 
-      if ( (email && password)!= "" ){
+      if ((email && password) != "") {
         console.log(email);
         console.log(password);
         console.log(name);
@@ -75,33 +104,28 @@ $(document).ready(function() {
   });
 
   $("#busker").click(function() {
+    context = "busker_list";
+    $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
+    $("body").append(search_template());
+
+    // append buskers here
     $("body").append(busker_template(busker_instance_Ed));
     $("body").append(busker_template(busker_instance_AnChe));
     $("body").append(busker_template(busker_instance_Wu));
+    // append buskers here
+
+    $("body").append($('<div class="container-fluid"><a href="#" class="btn btn-md btn-default" style="position: fixed; bottom: 2%; right: 2%;">Top</a></div>'));
+
+    $(window).scroll(function() {
+       if(($(window).scrollTop() + $(window).height() == $(document).height()) && context=="busker_list") {
+           // append new buskers here
+           $("body").append(busker_template(busker_instance_Wu));
+           console.log(context);
+       }
+    });
+
   });
-
-  $("#signin").on('click', '.btn', function() {
-    var email = $(".email").val();
-    var password = $(".password").val()
-
-    if ( (email && password)!= "" ){
-      var user = $('<ul class="nav pull-right"><li><a href="#">Hello! '+ email +'</a></li></ul>');
-      $(".nav-collapse").append(user);
-      $("#signin").remove();
-    } else {
-      alert("Please enter your email and password!");
-    }
-  });
-
-
 
 })
-
-! function($) {
-  $(function() {
-    // carousel demo
-    $('#myCarousel1').carousel()
-  })
-}(window.jQuery)

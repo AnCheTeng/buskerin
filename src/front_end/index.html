@@ -45,16 +45,15 @@
               <li class="">
                 <a href="#" class='home'>Home</a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="#" id='signup'>Sign Up</a>
-                <li></li>
-              </li>
+              </li> -->
               <li>
                 <a href="#" id='busker'>Busker List</a>
               </li>
               <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Functions<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li>
                     <a href="#">Action</a>
@@ -66,12 +65,12 @@
                     <a href="#">Something else here</a>
                   </li>
                   <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
+                  <li class="nav-header">Members</li>
                   <li>
-                    <a href="#">Separated link</a>
+                    <a href="https://github.com/AnCheTeng"><b>AnChe Teng</b></a>
                   </li>
                   <li>
-                    <a href="#">One more separated link</a>
+                    <a href="https://github.com/EdKung"><b>Ed Kung</b></a>
                   </li>
                 </ul>
               </li>
@@ -79,7 +78,8 @@
             <form class="navbar-form pull-right" id="signin">
               <input class="span2 email" type="text" placeholder="Email">
               <input class="span2 password" type="password" placeholder="Password">
-              <button type="button" class="btn">Sign in</button>
+              <button type="button" class="btn" id='signin-btn'>Sign in</button>
+              <button type="button" class="btn btn-warning" id='signup'><font face="Comic Sans MS"><b>Sign up for free!</b></font></button>
             </form>
           </div>
           <!--/.nav-collapse -->
@@ -207,6 +207,7 @@
       </footer>
     </div>
   </script>
+
   <script id="signup-template" type="text/x-handlebars-template">
     <div class="container-fluid">
       <div class="hero-unit" id="signup-hero" styel="">
@@ -249,6 +250,7 @@
       </div>
     </div>
   </script>
+
   <script id="busker-template" type="text/x-handlebars-template">
     <div class="container-fluid">
       <div class="busker hero-unit" id="{{name}}">
@@ -282,12 +284,20 @@
                 </tr>
               </tbody>
             </table>
-            <a class="btn btn-large btn-success" href="#{{name}}" onclick="alert('Add to MyFavorite!');">Like</a>
+            <button class="btn btn-large btn-success" onclick="alert('Add to MyFavorite!');">Like</button>
           </div>
-
         </div>
       </div>
     </div>
+
+
+  </script>
+
+  <script id="search-box-template" type="text/x-handlebars-template">
+    <form class="form-wrapper cf">
+      <input type="text" placeholder="Search here..." required>
+      <button type="submit">Search</button>
+    </form>
   </script>
 
   <!-- Placed at the end of the document so the pages load faster -->
