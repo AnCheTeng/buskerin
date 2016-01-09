@@ -28,7 +28,9 @@ var busker_instance_Wu = {
   members: "ChengHan Wu",
   email: "-",
 };
-//======================== busker example ========================
+
+var all_buskers_list = [busker_instance_Ed, busker_instance_AnChe, busker_instance_Wu]
+  //======================== busker example ========================
 
 //======================== Global Variable ========================
 var account_name = "";
@@ -110,20 +112,32 @@ $(document).ready(function() {
     $("body > .container-fluid").remove();
     $("body").append(search_template());
 
-    // append buskers here
-    $("body").append(busker_template(busker_instance_Ed));
-    $("body").append(busker_template(busker_instance_AnChe));
-    $("body").append(busker_template(busker_instance_Wu));
-    // append buskers here
+    // append buskers by passing the busker-list
+    var append_buskers = function(search_target) {
+      search_target.forEach(function(element) {
+        $("body").append(busker_template(element));
+      });
+    }
 
-    $("body").append($('<div class="container-fluid"><a href="#" class="btn btn-md btn-default" style="position: fixed; bottom: 2%; right: 2%;">Top</a></div>'));
+    // append origin buskers here
+    append_buskers(all_buskers_list);
+
+    $("body").append($('<div class="container-fluid"><a href="#" class="btn btn-md btn-info" style="position: fixed; bottom: 2%; right: 2%;">Top</a></div>'));
 
     $(window).scroll(function() {
-       if(($(window).scrollTop() + $(window).height() == $(document).height()) && context=="busker_list") {
-           // append new buskers here
-           $("body").append(busker_template(busker_instance_Wu));
-           console.log(context);
-       }
+      if (($(window).scrollTop() + $(window).height() == $(document).height()) && context == "busker_list") {
+        // append new buskers here
+        append_buskers(all_buskers_list);
+      }
+    });
+
+    $("#search_submit").click(function() {
+      var search_target = $(".form-wrapper input").val();
+      if (search_target != "") {
+        $("body > .container-fluid").remove();
+        // append new buskers here
+        append_buskers([busker_instance_Wu, busker_instance_Wu, busker_instance_Wu]);
+      }
     });
 
   });
