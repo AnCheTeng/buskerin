@@ -1,4 +1,4 @@
-//======================== busker example========================
+//======================== busker example ========================
 var busker_instance_Ed = {
   name: "Ed Kung",
   img: "https://pbs.twimg.com/profile_images/470426013311057921/g-AZBdua.jpeg",
@@ -28,8 +28,13 @@ var busker_instance_Wu = {
   members: "ChengHan Wu",
   email: "-",
 };
-//======================== busker example========================
+//======================== busker example ========================
 
+//======================== Global Variable ========================
+var account_name = "";
+var account_email = "";
+var account_favorate_list = "";
+//======================== Global Variable ========================
 
 $(document).ready(function() {
   // var source_home = $("#home-template").html();
@@ -49,6 +54,24 @@ $(document).ready(function() {
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
     $("body").append(signup_template());
+
+    $("#signup_btn").click(function() {
+      var email = $("#signup_email").val();
+      var password = $("#signup_password").val()
+      var name = $("#signup_name").val()
+
+      if ( (email && password)!= "" ){
+        console.log(email);
+        console.log(password);
+        console.log(name);
+        alert("Now you can log in with your account!");
+        $(".home").trigger('click');
+      } else {
+        alert("Please enter your email and password!");
+      }
+
+    });
+
   });
 
   $("#busker").click(function() {
@@ -58,6 +81,21 @@ $(document).ready(function() {
     $("body").append(busker_template(busker_instance_AnChe));
     $("body").append(busker_template(busker_instance_Wu));
   });
+
+  $("#signin").on('click', '.btn', function() {
+    var email = $(".email").val();
+    var password = $(".password").val()
+
+    if ( (email && password)!= "" ){
+      var user = $('<ul class="nav pull-right"><li><a href="#">Hello! '+ email +'</a></li></ul>');
+      $(".nav-collapse").append(user);
+      $("#signin").remove();
+    } else {
+      alert("Please enter your email and password!");
+    }
+  });
+
+
 
 })
 
