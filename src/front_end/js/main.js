@@ -68,10 +68,9 @@ $(document).ready(function() {
           "password": password
         },
         success: function(result) {
-          account_name = result.user_name;
-          account_email = result.email;
-          account_favorate_list = result.favorate_list;
-          if (result.success == true) {
+          account_name = result[0].user_name;
+          account_favorate_list = result[0].favorate_list;
+          if (result[0].success == true) {
             var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + account_name + '</b></font></a></li></ul>');
             $(".nav-collapse").append(user);
             $("#signin").remove();
