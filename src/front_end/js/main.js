@@ -109,7 +109,6 @@ $(document).ready(function() {
   $("#favorite").click(function() {
     if (account_name == "") {
       alert("Please login!");
-      $(".home").trigger('click');
     } else {
       context = "favorite_list";
       $("body > .form-wrapper").remove();
