@@ -28,11 +28,12 @@ function crawler() {
     fs.readFile(xmlPath, {encoding: 'utf-8'}, function(err, data){
       var jsonObj = parser.toJson(data);
       var buskerList = JSON.parse(jsonObj);
+      var save_array=[];
       // i < buskerList.datas.Performer.length
       for (var i = 0; i < buskerList.datas.Performer.length; i++) {
 
         var busker = buskerList.datas.Performer[i];
-        Busker.findOne({"performer_no":busker.performer_no}).exec(function(err, duplicate){
+        Busker.findOne({"num":busker.performer_no}).exec(function(err, duplicate){
           cnosole.log(duplicate);
           if(duplicate==undefined){
             refineData(busker);
@@ -49,12 +50,14 @@ function crawler() {
               long: "",
               time_stamp: +new Date()
             });
-            newMember.save(function(err){
-              if(err){
-                console.error(err);
-              }
-            });
-            logger(newMember)
+            // newMember.save(function(err){
+            //   if(err){
+            //     console.error(err);
+            //   }
+            // });
+            save_array.push(newMember);
+            save_all(save_array);
+            logger(newMember);
           }
         });
       }
@@ -127,4 +130,12 @@ function logger(newMember) {
   // console.log('performer_name: ' + typeof newMember.performer_name);
   // console.log('perform_type: ' + typeof newMember.perform_type);
   // console.log('perform_content: ' + typeof newMember.perform_content);
+}
+
+function save_all(save_array){
+  if(save_array.length!=0){
+    save_array.shift().save(function(err,saved){
+      save_all(save_array);
+    })
+  }
 }
