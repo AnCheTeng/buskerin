@@ -36,6 +36,7 @@ var all_buskers_list = [busker_instance_Ed, busker_instance_AnChe, busker_instan
 var account_name = "";
 var account_email = "";
 var account_favorate_list = "";
+var account_password = "";
 var context = "home";
 //======================== Global Variable ========================
 
@@ -61,16 +62,16 @@ $(document).ready(function() {
         $.ajax('http://104.199.159.110:8888/account/favorite', {
           type: 'POST',
           data: {
-            "performer_no": name,
-            "email": email,
-            "password": password
+            "performer_no": busker_num,
+            "email": account_email,
+            "password": account_password
           },
           success: function(result) {
             temp_busker_list = result;
             append_buskers(temp_busker_list);
-
           }
         });
+
       }
     });
   }
@@ -92,6 +93,7 @@ $(document).ready(function() {
         success: function(result) {
           account_name = result[0].user_name;
           account_favorate_list = result[0].favorate_list;
+          account_password = password;
           if (result[0].success == true) {
             var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + account_name + '</b></font></a></li></ul>');
             $(".nav-collapse").append(user);
