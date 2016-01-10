@@ -32,8 +32,9 @@ function crawler() {
       for (var i = 0; i < buskerList.datas.Performer.length; i++) {
 
         var busker = buskerList.datas.Performer[i];
-        Busker.findOne({"performer_name":busker.name}).exec(function(err, data){
-          if(!data){
+        Busker.findOne({"performer_no":busker.performer_no}).exec(function(err, duplicate){
+          cnosole.log(duplicate);
+          if(duplicate==undefined){
             refineData(busker);
             // Create a new instance of Busker
             var newMember = new Busker({
