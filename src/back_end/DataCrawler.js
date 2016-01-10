@@ -19,33 +19,63 @@ function crawler() {
   var source = request(url);
   var downloadFile = fs.createWriteStream(xmlPath);
 
-  Busker.remove();
-
   source.on('response', function(res) {
     res.pipe(downloadFile);
   });
 
   downloadFile.on('finish', function() {
+    Busker.remove({}, function(){});
     fs.readFile(xmlPath, {encoding: 'utf-8'}, function(err, data){
       var jsonObj = parser.toJson(data);
       var buskerList = JSON.parse(jsonObj);
+      // i < buskerList.datas.Performer.length
       for (var i = 0; i < buskerList.datas.Performer.length; i++) {
         var busker = buskerList.datas.Performer[i];
-        var newMember = new Busker();
-        newMember.idx = i;
-        newMember.num = busker.performer_no;
-        newMember.group_Name = busker.group_name;
-        newMember.performer_name = busker.performer_name;
-        newMember.perform_type = busker.perform_type;
-        newMember.perform_content = busker.perform_content;
+        
+        // Pre-assign those empty value
+        if(isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
+          // console.log('Both names are empty');
+          busker.group_name = 'Who are you?';
+          busker.performer_name = 'Who are you?';
+        } else if(isEmpty(busker.group_name) && !isEmpty(busker.performer_name)) {
+          // console.log('group_name is empty');
+            busker.group_name = busker.performer_name;
+        } else if(!isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
+            // console.log('performer_name is empty');
+            busker.performer_name = busker.group_name;
+        }
+        if(isEmpty(busker.perform_content)) {
+          busker.perform_content = 'None';
+        }
+
+        // Create a new instance of Busker
+        var newMember = new Busker({
+          num: busker.performer_no,
+          group_name: busker.group_name,
+          performer_name: busker.performer_name,
+          perform_type: busker.perform_type,
+          perform_content: busker.perform_content
+        });
+        newMember.save(function(err){
+          if(err){
+            console.error(err);
+          }
+        });
+
+        // Log
         console.log('===== New Member =====');
-        console.log('Idx: ' + newMember.idx);
         console.log('Num: ' + newMember.num);
-        console.log('group_num: ' + newMember.group_name);
+        console.log('group_name: ' + newMember.group_name);
         console.log('performer_name: ' + newMember.performer_name);
         console.log('perform_type: ' + newMember.perform_type);
         console.log('perform_content: ' + newMember.perform_content);
-        newMember.save();
+
+        // console.log('===== New Member =====');
+        // console.log('Num: ' + typeof newMember.num);
+        // console.log('group_name: ' + typeof newMember.group_name);
+        // console.log('performer_name: ' + typeof newMember.performer_name);
+        // console.log('perform_type: ' + typeof newMember.perform_type);
+        // console.log('perform_content: ' + typeof newMember.perform_content);
       }
       fs.writeFile(jsonPath, jsonObj, {encoding: 'utf-8'}, function(err){
         if(err) {
@@ -54,4 +84,28 @@ function crawler() {
       });
     });
   });
+}
+
+// Speed up calls to hasOwnProperty
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+    if (obj == undefined) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
 }

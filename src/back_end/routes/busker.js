@@ -1,7 +1,13 @@
 var express = require('express');
-var router = express.Router();
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Busker = require('./Model_Busker');
+var Member = require('./Model_Member');
+
+var router = express.Router();
 var parseUrlencoded = bodyParser.urlencoded({extended:false});
+
+mongoose.connect('mongodb://localhost/busker');
 
 var buskers = {
   'Slow motion': 'To act like a robot',
