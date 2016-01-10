@@ -52,10 +52,10 @@ $(document).ready(function() {
     search_target.forEach(function(element) {
       $("body").append(busker_template(element));
     });
-    $('.addFav').click(function(){
+    $('.addFav').click(function() {
       var busker_unit = $(this).closest('.hero-unit');
       var busker_num = busker_unit.data('num');
-      if(account_name==""){
+      if (account_name == "") {
         alert("Please login!");
       } else {
         console.log(busker_num);
@@ -91,7 +91,7 @@ $(document).ready(function() {
         },
         success: function(result) {
           account_name = result[0].user_name;
-          account_favorate_list = result[0].favorate_list;
+          account_favorate_list = result[0].favorite_list;
           account_password = password;
           account_email = email;
           if (result[0].success == true) {
@@ -138,6 +138,29 @@ $(document).ready(function() {
       $("body > #myCarousel1").remove();
       $("body > .container-fluid").remove();
       append_buskers(account_favorate_list);
+      $(".addFav").after($('<button class="btn btn-large btn-danger delFav">Delete</button>'));
+      $(".addFav").remove();
+
+      $('.delFav').click(function() {
+        var delete_unit = $(this).closest('.hero-unit');
+        var busker_num = delete_unit.data('num');
+
+        console.log(busker_num);
+        $.ajax('http://104.199.159.110:8888/account/favorite', {
+          type: 'DELETE',
+          data: {
+            "performer_no": busker_num,
+            "email": account_email,
+            "password": account_password
+          },
+          success: function(result) {
+            account_favorate_list = result;
+            $("#favorite").trigger("click");
+          }
+        });
+
+
+      });
     }
   })
 
@@ -154,7 +177,7 @@ $(document).ready(function() {
     var query_url = 'http://104.199.159.110:8888/busker/searchBuskerDefault?idx=';
     var search_target = "";
 
-    $.ajax(query_url+idx, {
+    $.ajax(query_url + idx, {
       type: 'GET',
       success: function(result) {
         console.log(result);
@@ -169,8 +192,8 @@ $(document).ready(function() {
     $(window).scroll(function() {
       if (($(window).scrollTop() + $(window).height() == $(document).height()) && context == "busker_list") {
         // append new buskers here
-        idx=idx+5;
-        $.ajax(query_url+idx, {
+        idx = idx + 5;
+        $.ajax(query_url + idx, {
           type: 'GET',
           success: function(result) {
             console.log(result);
@@ -184,13 +207,13 @@ $(document).ready(function() {
     $("#search_submit").click(function() {
       search_target = $(".form-wrapper input").val();
       idx = 0;
-      query_url = 'http://104.199.159.110:8888/busker/searchBuskerByKeyword?key='+search_target+'&idx=';
+      query_url = 'http://104.199.159.110:8888/busker/searchBuskerByKeyword?key=' + search_target + '&idx=';
       console.log(search_target);
       console.log(query_url);
       if (search_target != "") {
         $("body > .container-fluid").remove();
         // append new buskers here
-        $.ajax(query_url+idx, {
+        $.ajax(query_url + idx, {
           type: 'GET',
           success: function(result) {
             console.log(result);
