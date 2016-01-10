@@ -126,11 +126,10 @@ router.route('/favorite')
       Busker.findOne({
         num: favorite_busker
       }).exec(function(err, busker) {
+        found_Member.favorite = found_Member.favorite ? found_Member.favorite : [];
         found_Member.favorite = found_Member.favorite.push(busker);
         found_Member.save()
-        var response_json = found_Member;
-        delete response_json["password"];
-        response.send(response_json);
+        response.send(found_Member.favorite);
       })
 
     })
@@ -146,6 +145,7 @@ router.route('/favorite')
       password: pwd
     }).exec(function(err, found_Member) {
       var index = -1;
+      found_Member.favorite = found_Member.favorite ? found_Member.favorite : [];
       for (var i = 0, len = found_Member.favorite.length; i < len; i++) {
         if (found_Member.favorite[i].num === delete_busker) {
           index = i;
@@ -156,9 +156,7 @@ router.route('/favorite')
         found_Member.favorite.splice(index, 1);
         found_Member.save()
       }
-      var response_json = found_Member;
-      delete response_json["password"];
-      response.send(response_json);
+      response.send(found_Member.favorite);
     })
   })
 
