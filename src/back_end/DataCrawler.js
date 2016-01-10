@@ -38,7 +38,10 @@ function crawler() {
           group_name: busker.group_name,
           performer_name: busker.performer_name,
           perform_type: busker.perform_type,
-          perform_content: busker.perform_content
+          perform_content: busker.perform_content,
+          lat: "",
+          long: "",
+          time_stamp: +new Date()
         });
         newMember.save(function(err){
           if(err){
@@ -84,8 +87,8 @@ function refineData(busker) {
   // Pre-assign those empty value
   if(isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
     // console.log('Both names are empty');
-    busker.group_name = 'Who are you?';
-    busker.performer_name = 'Who are you?';
+    busker.group_name = 'Who are you';
+    busker.performer_name = 'Who are you';
   } else if(isEmpty(busker.group_name) && !isEmpty(busker.performer_name)) {
     // console.log('group_name is empty');
       busker.group_name = busker.performer_name;

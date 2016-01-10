@@ -5,7 +5,10 @@ var Member = new Schema({
   name: String,
   email: String,
   password: String,
-  favorite: Array
+  favorite: Array,
+  lat: String,
+  long: String,
+  time_stamp: String
 }, {
   versionKey: false
 });

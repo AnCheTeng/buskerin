@@ -33,7 +33,10 @@ router.route('/register')
           name: buskerName,
           email: buskerEmail,
           password: buskerPWD,
-          favorite: []
+          favorite: [],
+          lat: "",
+          long: "",
+          time_stamp: +new Date()
         });
         newMember.save();
         response.send('0');
@@ -58,6 +61,8 @@ router.route('/login')
       if(!found_Member) {
         jsonArr.push({success: false, user_name: "", favorite_list: ""});
       } else {
+        //TODO: to update lat and long of this member
+        found_Member.time_stamp = +new Date();
         jsonArr.push({success: true, user_name: found_Member.name, favorite_list: found_Member.favorite});
       }
       response.contentType('application/json');
@@ -65,5 +70,27 @@ router.route('/login')
       response.end();
     });
   });
+
+  router.route('/searchMemberByKeyword')
+    .get(parseUrlencoded, function(request, response){
+      var criteria = request.query;
+      var keyword = criteria.key;
+
+      Member.find({
+        $or:[ {name:keyword}, {email:keyword}, {favorite:keyword} ]
+      }).sort({'time_stamp': -1}).exec(function(err, foundData) {
+        response.send(foundData);
+      });
+    });
+
+  router.route('/searchMemberDefault')
+    .get(parseUrlencoded, function(request, response){
+      var criteria = request.query;
+      var idx = parseInt(criteria.idx);
+
+      Member.find().sort({'time_stamp': -1}).exec(function(err, foundData) {
+        response.send(foundData[idx]);
+      });
+    });
 
 module.exports = router;
