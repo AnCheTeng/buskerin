@@ -46,6 +46,13 @@ $(document).ready(function() {
   var busker_template = Handlebars.compile($("#busker-template").html());
   var search_template = Handlebars.compile($("#search-box-template").html());
 
+  // append buskers by passing the busker-list
+  var append_buskers = function(search_target) {
+    search_target.forEach(function(element) {
+      $("body").append(busker_template(element));
+    });
+  }
+
   // $("body").append(home_template());
 
   $("#signin").on('click', '#signin-btn', function() {
@@ -53,9 +60,27 @@ $(document).ready(function() {
     var password = $(".password").val()
 
     if ((email && password) != "") {
-      var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + email + '</b></font></a></li></ul>');
-      $(".nav-collapse").append(user);
-      $("#signin").remove();
+
+      $.ajax('http://104.199.159.110:8888/login', {
+        type: 'POST',
+        data: {
+          "email": email,
+          "password": password
+        },
+        success: function(result) {
+          account_name = result.user_name;
+          account_email = result.email;
+          account_favorate_list = result.favorate_list;
+          if (result.success == true) {
+            var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + account_name + '</b></font></a></li></ul>');
+            $(".nav-collapse").append(user);
+            $("#signin").remove();
+          } else {
+            alert("Login fail");
+          }
+        }
+      });
+
     } else {
       alert("Please enter your email and password!");
     }
@@ -79,31 +104,20 @@ $(document).ready(function() {
 
   $(".home").trigger('click');
 
-  $("#signup").click(function() {
-    context = "sign_up";
-    $("body > .form-wrapper").remove();
-    $("body > #myCarousel1").remove();
-    $("body > .container-fluid").remove();
-    $("body").append(signup_template());
 
-    $("#signup_btn").click(function() {
-      var email = $("#signup_email").val();
-      var password = $("#signup_password").val()
-      var name = $("#signup_name").val()
 
-      if ((email && password) != "") {
-        console.log(email);
-        console.log(password);
-        console.log(name);
-        alert("Now you can log in with your account!");
-        $(".home").trigger('click');
-      } else {
-        alert("Please enter your email and password!");
-      }
-
-    });
-
-  });
+  $("#favorite").click(function() {
+    if (account_name == "") {
+      alert("Please login!");
+      $(".home").trigger('click');
+    } else {
+      context = "favorite_list";
+      $("body > .form-wrapper").remove();
+      $("body > #myCarousel1").remove();
+      $("body > .container-fluid").remove();
+      append_buskers(account_favorate_list);
+    }
+  })
 
   $("#busker").click(function() {
     context = "busker_list";
@@ -112,12 +126,6 @@ $(document).ready(function() {
     $("body > .container-fluid").remove();
     $("body").append(search_template());
 
-    // append buskers by passing the busker-list
-    var append_buskers = function(search_target) {
-      search_target.forEach(function(element) {
-        $("body").append(busker_template(element));
-      });
-    }
 
     // append origin buskers here
     append_buskers(all_buskers_list);
@@ -138,6 +146,43 @@ $(document).ready(function() {
         // append new buskers here
         append_buskers([busker_instance_Wu, busker_instance_Wu, busker_instance_Wu]);
       }
+    });
+
+  });
+
+  $("#signup").click(function() {
+    context = "sign_up";
+    $("body > .form-wrapper").remove();
+    $("body > #myCarousel1").remove();
+    $("body > .container-fluid").remove();
+    $("body").append(signup_template());
+
+    $("#signup_btn").click(function() {
+      var email = $("#signup_email").val();
+      var password = $("#signup_password").val()
+      var name = $("#signup_name").val()
+
+      if ((email && password) != "") {
+        $.ajax('http://104.199.159.110:8888/register', {
+          type: 'POST',
+          data: {
+            "name": name,
+            "email": email,
+            "password": password
+          },
+          success: function(result) {
+            if (result == 0) {
+              alert("Now you can log in with your email!");
+              $(".home").trigger('click');
+            } else {
+              alert("You have registered!");
+            }
+          }
+        });
+      } else {
+        alert("Please enter your email and password!");
+      }
+
     });
 
   });
