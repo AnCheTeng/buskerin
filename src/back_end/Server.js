@@ -10,8 +10,12 @@ console.log("===========================Server is starting======================
 app.use(express.static('../front_end'));
 
 var busker = require('./routes/busker');
+var register = require('./routes/register');
+var login = require('./routes/login');
 
 app.use('/busker', busker);
+app.use('/register', register);
+app.use('/login', login);
 
 app.get('/', function(request, response) {
   console.log('Hello~');
