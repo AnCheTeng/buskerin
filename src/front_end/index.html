@@ -18,6 +18,10 @@
   <!-- <link rel="shortcut icon" href="../assets/ico/favicon.png"> -->
   <link href='assets/css/origin.css' rel='stylesheet'>
   <link href='assets/css/main.css' rel='stylesheet'>
+
+  <style type="text/css">
+    #map { height: 400px; }
+  </style>
 </head>
 
 <body>
@@ -104,9 +108,8 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Finnish_bluegrass_buskers_Rautakoura,_Helsinki.jpg" alt="">
           <div class="container-fluid">
             <div class="carousel-caption">
-              <h1>Example headline.</h1>
-
-              <p class="lead">Hello world!</p>
+              <h1>Open your eyes to see the lovely world!</h1>
+              <!-- <p class="lead">Hello world!</p> -->
               <a class="btn btn-large btn-primary" href="#">Sign up today</a>
             </div>
           </div>
@@ -115,9 +118,9 @@
           <img src="https://theweeklyminute.files.wordpress.com/2014/03/shane_francescut_bw_challenge-017.jpg" alt="">
           <div class="container-fluid">
             <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p class="lead">Hello world!</p>
-              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+              <h1>Every single person can perform!</h1>
+              <p class="lead">Don't be shy!</p>
+              <a class="btn btn-large btn-primary" href="#">Sign up now</a>
             </div>
           </div>
         </div>
@@ -125,9 +128,9 @@
           <img src="http://www.pxleyes.com/images/contests/inanimation-2/fullsize/Street-performer-4e06c914da802_hires.jpg" alt="">
           <div class="container-fluid">
             <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
+              <h1>Be the master of your own!</h1>
 
-              <p class="lead">Hello world!</p>
+              <p class="lead">Shine the world, shine yourself</p>
               <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
             </div>
           </div>
@@ -146,9 +149,7 @@
         <div class="span4">
           <h1>Creative Craft</h1>
           <img class="img-circle" width="75%" src="https://img.nienie.tw/pixnet/c4fdfe821a3af8a7641d46d8663e3ee3.jpg">
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-            et.
-          </p>
+          <p>Hello~</p>
           <p>
             <a class="btn btn-lg btn-warning" href="#">Find them! »</a>
           </p>
@@ -157,8 +158,7 @@
         <div class="span4">
           <h1>Performing Arts</h1>
           <img class="img-circle" width="75%" src="http://www.diabolokh.url.tw/diabolokh/images/photos/Celebrity/2011091420232294197.jpg">
-          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
-            sit amet risus.</p>
+          <p>HiHi~</p>
           <p>
             <a class="btn btn-warning btn-lg" href="#">Find them! »</a>
           </p>
@@ -167,8 +167,7 @@
         <div class="span4">
           <h1>Visual Arts</h1>
           <img class="img-circle" width="75%" src="http://mychannel.pchome.com.tw/channel/class/show_preview.php3?d=2010-05-07&enname=wlwin&t=.jpg&fn=image&view=1">
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
+          <p>cya</p>
           <p>
             <a class="btn btn-warning btn-lg" href="#">Find them! »</a>
           </p>
@@ -184,17 +183,12 @@
           <span class="muted">It'll blow your mind.</span>
         </h2>
 
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <p class="lead">Put some introduction of map service</p>
       </div>
       <hr class="featurette-divider">
-      <div class="featurette">
-        <img class="featurette-image img-rounded pull-left" src="http://tw.people.com.cn/mediafile/200604/07/F200604071630201296527800.jpg">
-        <h2 class="featurette-heading">Oh yeah, it's that good.
-          <span class="muted">See for yourself.</span>
-        </h2>
-
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-      </div>
+        <div class="container-fluid">
+          <div id="map"></div>
+        </div>
       <hr class="featurette-divider">
 
       <!-- /END THE FEATURETTES -->
@@ -308,6 +302,10 @@
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
   <script src='lib/handlebars-v4.0.5.js'></script>
   <script src='js/main.js'></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArQlPMsFpVlDQGagSr448egzLQGTnLgFg&callback=initMap">
+  </script>
+  <script src='js/googleMap.js'></script>
 </body>
 
 </html>
