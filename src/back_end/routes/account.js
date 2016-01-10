@@ -79,65 +79,86 @@ router.route('/login')
     });
   });
 
-  router.route('/searchMemberByKeyword')
-    .get(parseUrlencoded, function(request, response){
-      var criteria = request.query;
-      var keyword = criteria.key;
+router.route('/searchMemberByKeyword')
+  .get(parseUrlencoded, function(request, response) {
+    var criteria = request.query;
+    var keyword = criteria.key;
 
-      Member.find({
-        $or:[ {name:keyword}, {email:keyword}, {favorite:keyword} ]
-      }).sort({'time_stamp': -1}).exec(function(err, foundData) {
-        response.send(foundData);
-      });
+    Member.find({
+      $or: [{
+        name: keyword
+      }, {
+        email: keyword
+      }, {
+        favorite: keyword
+      }]
+    }).sort({
+      'time_stamp': -1
+    }).exec(function(err, foundData) {
+      response.send(foundData);
     });
+  });
 
-  router.route('/searchMemberDefault')
-    .get(parseUrlencoded, function(request, response){
-      var criteria = request.query;
-      var idx = parseInt(criteria.idx);
+router.route('/searchMemberDefault')
+  .get(parseUrlencoded, function(request, response) {
+    var criteria = request.query;
+    var idx = parseInt(criteria.idx);
 
-      Member.find().sort({'time_stamp': -1}).exec(function(err, foundData) {
-        response.send(foundData[idx]);
-      });
+    Member.find().sort({
+      'time_stamp': -1
+    }).exec(function(err, foundData) {
+      response.send(foundData[idx]);
     });
+  });
 
-  router.route('/favorite')
-    .post(parseUrlencoded, function(request, response) {
-      var newFavorite = request.body;
-      var account = newFavorite.email;
-      var pwd = newFavorite.password;
-      var favorite_busker = newFavorite.performer_no;
+router.route('/favorite')
+  .post(parseUrlencoded, function(request, response) {
+    var newFavorite = request.body;
+    var account = newFavorite.email;
+    var pwd = newFavorite.password;
+    var favorite_busker = newFavorite.performer_no;
 
-      Member.findOne({
-        email: account,
-        password: pwd
-      }).exec(function(err, found_Member) {
-        found_Member.favorite = found_Member.favorite.push(favorite_busker);
+    Member.findOne({
+      email: account,
+      password: pwd
+    }).exec(function(err, found_Member) {
+      Busker.findOne({
+        num: favorite_busker
+      }).exec(function(err, busker) {
+        found_Member.favorite = found_Member.favorite.push(busker);
         found_Member.save()
         var response_json = found_Member;
         delete response_json["password"];
         response.send(response_json);
       })
-    })
-    .delete(parseUrlencoded, function(request, response) {
-      var newFavorite = request.body;
-      var account = newFavorite.email;
-      var pwd = newFavorite.password;
-      var delete_busker = newFavorite.performer_no;
 
-      Member.findOne({
-        email: account,
-        password: pwd
-      }).exec(function(err, found_Member) {
-        var index = found_Member.favorite.indexOf(delete_busker);
-        if (index >= 0) {
-          found_Member.favorite.splice(index, 1);
-          found_Member.save()
-        }
-        var response_json = found_Member;
-        delete response_json["password"];
-        response.send(response_json);
-      })
     })
+  })
+  .delete(parseUrlencoded, function(request, response) {
+    var newFavorite = request.body;
+    var account = newFavorite.email;
+    var pwd = newFavorite.password;
+    var delete_busker = newFavorite.performer_no;
+
+    Member.findOne({
+      email: account,
+      password: pwd
+    }).exec(function(err, found_Member) {
+      var index = -1;
+      for (var i = 0, len = found_Member.favorite.length; i < len; i++) {
+        if (found_Member.favorite[i].num === delete_busker) {
+          index = i;
+          break;
+        }
+      }
+      if (index >= 0) {
+        found_Member.favorite.splice(index, 1);
+        found_Member.save()
+      }
+      var response_json = found_Member;
+      delete response_json["password"];
+      response.send(response_json);
+    })
+  })
 
 module.exports = router;

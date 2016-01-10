@@ -51,6 +51,28 @@ $(document).ready(function() {
     search_target.forEach(function(element) {
       $("body").append(busker_template(element));
     });
+    $('.addFav').click(function(){
+      var busker_unit = $(this).closest('.hero-unit');
+      var busker_num = busker_unit.data('num');
+      if(account_name==""){
+        alert("Please login!");
+      } else {
+        console.log(busker_num);
+        $.ajax('http://104.199.159.110:8888/account/favorite', {
+          type: 'POST',
+          data: {
+            "performer_no": name,
+            "email": email,
+            "password": password
+          },
+          success: function(result) {
+            temp_busker_list = result;
+            append_buskers(temp_busker_list);
+
+          }
+        });
+      }
+    });
   }
 
   // $("body").append(home_template());
@@ -136,6 +158,7 @@ $(document).ready(function() {
         console.log(result);
         temp_busker_list = result;
         append_buskers(temp_busker_list);
+
       }
     });
     // append origin buskers here
@@ -159,7 +182,7 @@ $(document).ready(function() {
     $("#search_submit").click(function() {
       search_target = $(".form-wrapper input").val();
       idx = 0;
-      query_url = 'http://104.199.159.110:8888/busker/searchBuskerByKeyword?keyword='+search_target+'&idx=';
+      query_url = 'http://104.199.159.110:8888/busker/searchBuskerByKeyword?key='+search_target+'&idx=';
       console.log(search_target);
       console.log(query_url);
       if (search_target != "") {
@@ -175,6 +198,8 @@ $(document).ready(function() {
         });
       }
     });
+
+
 
   });
 

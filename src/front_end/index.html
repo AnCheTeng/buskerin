@@ -256,7 +256,7 @@
 
   <script id="busker-template" type="text/x-handlebars-template">
     <div class="container-fluid">
-      <div class="busker hero-unit" id="{{num}}">
+      <div class="busker hero-unit" id="{{num}}" data-num="{{num}}">
         <h1 align="left" style="margin-bottom: 15px">{{group_name}}</h1>
         <div class="container-fluid">
           <div class="span4" style="height:300px">
@@ -287,7 +287,7 @@
                 </tr>
               </tbody>
             </table>
-            <button class="btn btn-large btn-success" onclick="alert('Add to MyFavorite!');">Like</button>
+            <button class="btn btn-large btn-success addFav">Like</button>
           </div>
         </div>
       </div>
