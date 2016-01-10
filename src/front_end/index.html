@@ -256,8 +256,8 @@
 
   <script id="busker-template" type="text/x-handlebars-template">
     <div class="container-fluid">
-      <div class="busker hero-unit" id="{{name}}">
-        <h1 align="left" style="margin-bottom: 15px">{{name}}</h1>
+      <div class="busker hero-unit" id="{{num}}">
+        <h1 align="left" style="margin-bottom: 15px">{{group_name}}</h1>
         <div class="container-fluid">
           <div class="span4" style="height:300px">
             <img align="middle" class="image img-polaroid" src="{{img}}" style="height:100%">
@@ -267,19 +267,19 @@
               <tbody>
                 <tr>
                   <th>Category</th>
-                  <td class="">{{category}}</td>
+                  <td class="">{{perform_type}}</td>
                 </tr>
                 <tr>
                   <th>Content</th>
-                  <td class="">{{content}}</td>
+                  <td class="">{{perform_content}}</td>
                 </tr>
                 <tr>
                   <th>Facebook</th>
-                  <td><a href="{{fb}}">{{name}}</a></td>
+                  <td><a href="{{fb}}">{{group_name}}</a></td>
                 </tr>
                 <tr>
                   <th>Members</th>
-                  <td>{{members}}</td>
+                  <td>{{performer_name}}</td>
                 </tr>
                 <tr>
                   <th>Email</th>

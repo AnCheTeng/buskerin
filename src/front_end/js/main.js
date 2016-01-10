@@ -124,16 +124,33 @@ $(document).ready(function() {
     $("body > .container-fluid").remove();
     $("body").append(search_template());
 
+    var temp_busker_list = "";
+    var idx = 0;
 
+    $.ajax('http://104.199.159.110:8888/busker/searchBuskerDefault?idx='+idx, {
+      type: 'GET',
+      success: function(result) {
+        console.log(result);
+        temp_busker_list = result;
+        append_buskers(temp_busker_list);
+      }
+    });
     // append origin buskers here
-    append_buskers(all_buskers_list);
+
 
     $("body").append($('<div class="container-fluid"><a href="#" class="btn btn-md btn-info" style="position: fixed; bottom: 2%; right: 2%;">Top</a></div>'));
 
     $(window).scroll(function() {
       if (($(window).scrollTop() + $(window).height() == $(document).height()) && context == "busker_list") {
         // append new buskers here
-        append_buskers(all_buskers_list);
+        idx=idx+4;
+        $.ajax('http://104.199.159.110:8888/busker/searchBuskerDefault?idx='+idx, {
+          type: 'GET',
+          success: function(result) {
+            temp_busker_list = result;
+          }
+        });
+        append_buskers(temp_busker_list);
       }
     });
 

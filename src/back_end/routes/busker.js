@@ -36,7 +36,7 @@ router.route('/searchBuskerDefault')
     var idx = parseInt(criteria.idx);
 
     Busker.find().sort({'num': -1}).exec(function(err, foundData) {
-      response.send(foundData[idx]);
+      response.send(foundData.splice(idx,5));
     });
   });
 
