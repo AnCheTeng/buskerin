@@ -31,23 +31,7 @@ function crawler() {
       // i < buskerList.datas.Performer.length
       for (var i = 0; i < buskerList.datas.Performer.length; i++) {
         var busker = buskerList.datas.Performer[i];
-        
-        // Pre-assign those empty value
-        if(isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
-          // console.log('Both names are empty');
-          busker.group_name = 'Who are you?';
-          busker.performer_name = 'Who are you?';
-        } else if(isEmpty(busker.group_name) && !isEmpty(busker.performer_name)) {
-          // console.log('group_name is empty');
-            busker.group_name = busker.performer_name;
-        } else if(!isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
-            // console.log('performer_name is empty');
-            busker.performer_name = busker.group_name;
-        }
-        if(isEmpty(busker.perform_content)) {
-          busker.perform_content = 'None';
-        }
-
+        refineData(busker);
         // Create a new instance of Busker
         var newMember = new Busker({
           num: busker.performer_no,
@@ -61,21 +45,7 @@ function crawler() {
             console.error(err);
           }
         });
-
-        // Log
-        console.log('===== New Member =====');
-        console.log('Num: ' + newMember.num);
-        console.log('group_name: ' + newMember.group_name);
-        console.log('performer_name: ' + newMember.performer_name);
-        console.log('perform_type: ' + newMember.perform_type);
-        console.log('perform_content: ' + newMember.perform_content);
-
-        // console.log('===== New Member =====');
-        // console.log('Num: ' + typeof newMember.num);
-        // console.log('group_name: ' + typeof newMember.group_name);
-        // console.log('performer_name: ' + typeof newMember.performer_name);
-        // console.log('perform_type: ' + typeof newMember.perform_type);
-        // console.log('perform_content: ' + typeof newMember.perform_content);
+        logger(newMember)
       }
       fs.writeFile(jsonPath, jsonObj, {encoding: 'utf-8'}, function(err){
         if(err) {
@@ -108,4 +78,39 @@ function isEmpty(obj) {
     }
 
     return true;
+}
+
+function refineData(busker) {
+  // Pre-assign those empty value
+  if(isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
+    // console.log('Both names are empty');
+    busker.group_name = 'Who are you?';
+    busker.performer_name = 'Who are you?';
+  } else if(isEmpty(busker.group_name) && !isEmpty(busker.performer_name)) {
+    // console.log('group_name is empty');
+      busker.group_name = busker.performer_name;
+  } else if(!isEmpty(busker.group_name) && isEmpty(busker.performer_name)) {
+      // console.log('performer_name is empty');
+      busker.performer_name = busker.group_name;
+  }
+  if(isEmpty(busker.perform_content)) {
+    busker.perform_content = 'None';
+  }
+}
+
+function logger(newMember) {
+  // Log
+  console.log('===== New Member =====');
+  console.log('Num: ' + newMember.num);
+  console.log('group_name: ' + newMember.group_name);
+  console.log('performer_name: ' + newMember.performer_name);
+  console.log('perform_type: ' + newMember.perform_type);
+  console.log('perform_content: ' + newMember.perform_content);
+
+  // console.log('===== New Member =====');
+  // console.log('Num: ' + typeof newMember.num);
+  // console.log('group_name: ' + typeof newMember.group_name);
+  // console.log('performer_name: ' + typeof newMember.performer_name);
+  // console.log('perform_type: ' + typeof newMember.perform_type);
+  // console.log('perform_content: ' + typeof newMember.perform_content);
 }
