@@ -126,7 +126,7 @@ router.route('/favorite')
         num: favorite_busker
       }).exec(function(err, busker) {
         found_Member.favorite.push(busker);
-        found_Member = ObjectArrayUnique(found_Member, "num");
+        found_Member.favorite = ObjectArrayUnique(found_Member.favorite, "num");
         found_Member.save()
         response.send(found_Member.favorite);
       })
