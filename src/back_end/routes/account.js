@@ -125,7 +125,8 @@ router.route('/favorite')
       Busker.findOne({
         num: favorite_busker
       }).exec(function(err, busker) {
-	found_Member.favorite.push(busker);
+        found_Member.favorite.push(busker);
+        found_Member = ObjectArrayUnique(found_Member, "num");
         found_Member.save()
         response.send(found_Member.favorite);
       })
@@ -156,5 +157,32 @@ router.route('/favorite')
       response.send(found_Member.favorite);
     })
   })
+
+function ObjectArrayIndexOf(myArray, searchTerm, property) {
+  for (var i = 0, len = myArray.length; i < len; i++) {
+    if (myArray[i][property] === searchTerm) return i;
+  }
+  return -1;
+}
+
+function ObjectArrayUnique(myArray, uniqProperty) {
+
+  var result = [];
+  var duplicate = 0;
+
+  while (myArray.length != 0) {
+    var uniq_elem = myArray.shift();
+
+    duplicate = ObjectArrayIndexOf(myArray, uniq_elem[uniqProperty], uniqProperty);
+
+    while (duplicate >= 0) {
+      myArray.splice(duplicate, 1);
+      duplicate = ObjectArrayIndexOf(myArray, uniq_elem[uniqProperty], uniqProperty);
+    }
+    result.push(uniq_elem);
+  }
+
+  return result;
+}
 
 module.exports = router;
