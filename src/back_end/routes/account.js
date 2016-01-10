@@ -20,7 +20,7 @@ router.route('/')
   })
 
 router.route('/register')
-  .put(parseUrlencoded, function(request, response) {
+  .post(parseUrlencoded, function(request, response) {
     var newBusker = request.body;
     var buskerName = newBusker.name;
     var buskerEmail = newBusker.email;
