@@ -16,6 +16,8 @@ router.route('/')
       response.send(foundData);
     });
   })
+
+router.route('/register')
   .put(parseUrlencoded, function(request, response){
     var newBusker = request.body;
     var buskerName = newBusker.name;
@@ -38,6 +40,28 @@ router.route('/')
       } else {
         response.send('1');
       }
+      response.end();
+    });
+  });
+
+router.route('/login')
+  .post(parseUrlencoded, function(request, response){
+    var newBusker = request.body;
+    var buskerEmail = newBusker.email;
+    var buskerPWD = newBusker.password;
+    jsonArr = [];
+
+    Member.findOne({
+      email: buskerEmail,
+      password: buskerPWD
+    }).exec(function(err, found_Member) {
+      if(!found_Member) {
+        jsonArr.push({success: false, user_name: "", favorite_list: ""});
+      } else {
+        jsonArr.push({success: true, user_name: found_Member.name, favorite_list: found_Member.favorite});
+      }
+      response.contentType('application/json');
+      response.send(JSON.stringify(jsonArr));
       response.end();
     });
   });
