@@ -30,27 +30,32 @@ function crawler() {
       var buskerList = JSON.parse(jsonObj);
       // i < buskerList.datas.Performer.length
       for (var i = 0; i < buskerList.datas.Performer.length; i++) {
+
         var busker = buskerList.datas.Performer[i];
-        refineData(busker);
-        // Create a new instance of Busker
-        var newMember = new Busker({
-          num: busker.performer_no,
-          group_name: busker.group_name,
-          performer_name: busker.performer_name,
-          perform_type: busker.perform_type,
-          perform_content: busker.perform_content,
-          email: busker.email,
-          img: "https://pbs.twimg.com/profile_images/557472607985876992/2RF6SFTW.jpeg",
-          lat: "",
-          long: "",
-          time_stamp: +new Date()
-        });
-        newMember.save(function(err){
-          if(err){
-            console.error(err);
+        Busker.findOne({"performer_name":busker.name}).exec(function(err, data){
+          if(!data){
+            refineData(busker);
+            // Create a new instance of Busker
+            var newMember = new Busker({
+              num: busker.performer_no,
+              group_name: busker.group_name,
+              performer_name: busker.performer_name,
+              perform_type: busker.perform_type,
+              perform_content: busker.perform_content,
+              email: busker.email,
+              img: "https://pbs.twimg.com/profile_images/557472607985876992/2RF6SFTW.jpeg",
+              lat: "",
+              long: "",
+              time_stamp: +new Date()
+            });
+            newMember.save(function(err){
+              if(err){
+                console.error(err);
+              }
+            });
+            logger(newMember)
           }
         });
-        logger(newMember)
       }
       fs.writeFile(jsonPath, jsonObj, {encoding: 'utf-8'}, function(err){
         if(err) {
