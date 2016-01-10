@@ -67,8 +67,7 @@ $(document).ready(function() {
             "password": account_password
           },
           success: function(result) {
-            temp_busker_list = result;
-            append_buskers(temp_busker_list);
+            account_favorate_list = result;
           }
         });
 
@@ -94,6 +93,7 @@ $(document).ready(function() {
           account_name = result[0].user_name;
           account_favorate_list = result[0].favorate_list;
           account_password = password;
+          account_email = email;
           if (result[0].success == true) {
             var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + account_name + '</b></font></a></li></ul>');
             $(".nav-collapse").append(user);
