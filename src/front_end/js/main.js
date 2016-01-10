@@ -61,7 +61,7 @@ $(document).ready(function() {
 
     if ((email && password) != "") {
 
-      $.ajax('http://104.199.159.110:8888/login', {
+      $.ajax('http://104.199.159.110:8888/account/login', {
         type: 'POST',
         data: {
           "email": email,
@@ -163,7 +163,7 @@ $(document).ready(function() {
       var name = $("#signup_name").val()
 
       if ((email && password) != "") {
-        $.ajax('http://104.199.159.110:8888/register', {
+        $.ajax('http://104.199.159.110:8888/account/register', {
           type: 'POST',
           data: {
             "name": name,
