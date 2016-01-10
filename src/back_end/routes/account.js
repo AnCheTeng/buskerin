@@ -118,7 +118,6 @@ router.route('/favorite')
     var account = newFavorite.email;
     var pwd = newFavorite.password;
     var favorite_busker = newFavorite.performer_no;
-
     Member.findOne({
       email: account,
       password: pwd
@@ -126,8 +125,7 @@ router.route('/favorite')
       Busker.findOne({
         num: favorite_busker
       }).exec(function(err, busker) {
-        found_Member.favorite = found_Member.favorite ? found_Member.favorite : [];
-        found_Member.favorite = found_Member.favorite.push(busker);
+	found_Member.favorite.push(busker);
         found_Member.save()
         response.send(found_Member.favorite);
       })
@@ -145,7 +143,6 @@ router.route('/favorite')
       password: pwd
     }).exec(function(err, found_Member) {
       var index = -1;
-      found_Member.favorite = found_Member.favorite ? found_Member.favorite : [];
       for (var i = 0, len = found_Member.favorite.length; i < len; i++) {
         if (found_Member.favorite[i].num === delete_busker) {
           index = i;
