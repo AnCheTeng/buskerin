@@ -26,7 +26,7 @@ router.route('/searchBuskerByKeyword')
     Busker.find({
       $or:[ {perform_name:keyword}, {perform_type:keyword}, {perform_content:keyword} ]
     }).sort({'num': -1}).exec(function(err, foundData) {
-      response.send(foundData.slice(idx, idx+5));
+      response.send(foundData.slice(idx, 5));
     });
   });
 

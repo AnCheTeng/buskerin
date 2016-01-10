@@ -39,6 +39,8 @@ function crawler() {
           performer_name: busker.performer_name,
           perform_type: busker.perform_type,
           perform_content: busker.perform_content,
+          email: busker.email,
+          img: "https://pbs.twimg.com/profile_images/557472607985876992/2RF6SFTW.jpeg",
           lat: "",
           long: "",
           time_stamp: +new Date()
@@ -98,6 +100,9 @@ function refineData(busker) {
   }
   if(isEmpty(busker.perform_content)) {
     busker.perform_content = 'None';
+  }
+  if(isEmpty(busker.email)) {
+    busker.email = 'None';
   }
 }
 

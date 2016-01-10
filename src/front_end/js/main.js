@@ -143,14 +143,15 @@ $(document).ready(function() {
     $(window).scroll(function() {
       if (($(window).scrollTop() + $(window).height() == $(document).height()) && context == "busker_list") {
         // append new buskers here
-        idx=idx+4;
+        idx=idx+5;
         $.ajax('http://104.199.159.110:8888/busker/searchBuskerDefault?idx='+idx, {
           type: 'GET',
           success: function(result) {
+            console.log(result);
             temp_busker_list = result;
+            append_buskers(temp_busker_list);
           }
         });
-        append_buskers(temp_busker_list);
       }
     });
 

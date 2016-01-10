@@ -7,6 +7,9 @@ var Busker = new Schema({
   performer_name: String,
   perform_type: String,
   perform_content: String,
+  email: String,
+  website: String,
+  img: String,
   lat: String,
   long: String,
   time_stamp: String
