@@ -1,37 +1,3 @@
-//======================== busker example ========================
-var busker_instance_Ed = {
-  name: "Ed Kung",
-  img: "https://pbs.twimg.com/profile_images/470426013311057921/g-AZBdua.jpeg",
-  category: "Performance Arts",
-  content: "Hip-hop and Street Dance",
-  fb: "https://www.facebook.com/kung.ed?fref=ts",
-  members: "Ed Kung",
-  email: "-",
-};
-
-var busker_instance_AnChe = {
-  name: "AnChe Teng",
-  img: "https://scontent-hkg3-1.xx.fbcdn.net/hphotos-xft1/v/t1.0-9/11140355_10206868723862535_645045240312747314_n.jpg?oh=cf3e8b2311228c42de8cca6727eddd95&oe=5746A087",
-  category: "Performance Arts",
-  content: "Chinese Flute",
-  fb: "https://www.facebook.com/Wastelandshadow",
-  members: "AnChe Teng",
-  email: "-",
-};
-
-var busker_instance_Wu = {
-  name: "ChengHan Wu",
-  img: "https://scontent-hkg3-1.xx.fbcdn.net/hphotos-xtl1/v/t1.0-9/11259429_10203609253026537_1212446084713178912_n.jpg?oh=e101fdd2df6e9b3ae3d4d7b2a51d85dd&oe=56FDE73E",
-  category: "Performance Arts",
-  content: "Singing",
-  fb: "https://www.facebook.com/profile.php?id=1672230560&fref=ts",
-  members: "ChengHan Wu",
-  email: "-",
-};
-
-var all_buskers_list = [busker_instance_Ed, busker_instance_AnChe, busker_instance_Wu]
-  //======================== busker example ========================
-
 //======================== Global Variable ========================
 var account_name = "";
 var account_email = "";
@@ -51,27 +17,27 @@ $(document).ready(function() {
   var append_buskers = function(search_target) {
     search_target.forEach(function(element) {
       $("body").append(busker_template(element));
-    });
-    $('.addFav').click(function() {
-      var busker_unit = $(this).closest('.hero-unit');
-      var busker_num = busker_unit.data('num');
-      if (account_name == "") {
-        alert("Please login!");
-      } else {
-        console.log(busker_num);
-        $.ajax('http://104.199.159.110:8888/account/favorite', {
-          type: 'POST',
-          data: {
-            "performer_no": busker_num,
-            "email": account_email,
-            "password": account_password
-          },
-          success: function(result) {
-            account_favorate_list = result;
-          }
-        });
+      $("#"+element.num).on('click', '.addFav', function() {
+        var busker_unit = $(this).closest('.hero-unit');
+        var busker_num = busker_unit.data('num');
+        if (account_name == "") {
+          alert("Please login!");
+        } else {
+          console.log(busker_num);
+          $.ajax('http://104.199.159.110:8888/account/favorite', {
+            type: 'POST',
+            data: {
+              "performer_no": busker_num,
+              "email": account_email,
+              "password": account_password
+            },
+            success: function(result) {
+              account_favorate_list = result;
+            }
+          });
 
-      }
+        }
+      })
     });
   }
 
@@ -188,8 +154,13 @@ $(document).ready(function() {
     });
     // append origin buskers here
     $("body").append($('<div class="container-fluid"><a href="#" class="btn btn-md btn-info" style="position: fixed; bottom: 2%; right: 2%;">Top</a></div>'));
-
+    // var timeout;
     $(window).scroll(function() {
+      // ============Timeout for scroll down============
+      // clearTimeout(timeout);
+      // timeout = setTimeout(function() {
+      //     // do your stuff
+      // }, 50);
       if (($(window).scrollTop() + $(window).height() == $(document).height()) && context == "busker_list") {
         // append new buskers here
         idx = idx + 5;
