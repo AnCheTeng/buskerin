@@ -198,6 +198,11 @@ body {
     max-width: 40%;
     margin: 0 auto 20px;
   }
+  table {
+      table-layout: fixed;
+      word-wrap: break-word;
+  }
+
 }
 @media (max-width: 767px) {
   .navbar-inner {
@@ -235,4 +240,9 @@ body {
     font-size: 18px;
     line-height: 1.5;
   }
+  table {
+      table-layout: fixed;
+      word-wrap: break-word;
+  }
+
 }

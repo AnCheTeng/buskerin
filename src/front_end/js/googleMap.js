@@ -1,5 +1,5 @@
 function initMap() {
-  
+
   var myLoc = {lat: 25, lng: 121.4};
   var markers = [];
 
