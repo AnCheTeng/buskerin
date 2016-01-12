@@ -12,6 +12,7 @@ var parseUrlencoded = bodyParser.urlencoded({
 mongoose.createConnection('mongodb://localhost/busker');
 
 var jsonArr = [];
+var numOfMemberBeBusker = 0;
 
 router.route('/')
   .get(function(request, response) {
@@ -22,20 +23,21 @@ router.route('/')
 
 router.route('/register')
   .post(parseUrlencoded, function(request, response) {
-    var newBusker = request.body;
-    var buskerName = newBusker.name;
-    var buskerEmail = newBusker.email;
-    var buskerPWD = newBusker.password;
+    var newMember = request.body;
+    var memberName = newMember.name;
+    var memberEmail = newMember.email;
+    var memberPWD = newMember.password;
+    var memberBeBuskers = newMember.beBuskers;
 
     Member.findOne({
-      name: buskerName,
-      email: buskerEmail
+      name: memberName,
+      email: memberEmail
     }).exec(function(err, found_Member) {
       if (!found_Member) {
         var newMember = new Member({
-          name: buskerName,
-          email: buskerEmail,
-          password: buskerPWD,
+          name: memberName,
+          email: memberEmail,
+          password: memberEmail,
           favorite: [],
           lat: "",
           long: "",

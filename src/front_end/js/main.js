@@ -211,8 +211,9 @@ $(document).ready(function() {
 
     $("#signup_btn").click(function() {
       var email = $("#signup_email").val();
-      var password = $("#signup_password").val()
-      var name = $("#signup_name").val()
+      var password = $("#signup_password").val();
+      var name = $("#signup_name").val();
+      var buskerCheck = ($('#buskerCheckBox').is(":checked")) ? true : false;
 
       if ((email && password) != "") {
         $.ajax('http://104.199.159.110:8888/account/register', {
@@ -220,7 +221,8 @@ $(document).ready(function() {
           data: {
             "name": name,
             "email": email,
-            "password": password
+            "password": password,
+            "beBuskers": buskerCheck
           },
           success: function(result) {
             if (result == 0) {

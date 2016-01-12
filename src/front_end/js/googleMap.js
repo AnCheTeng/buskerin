@@ -1,7 +1,6 @@
-var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
-var markers = [];
 var map;
 var infoWindowww;
+var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
 
 function initMap() {
 
@@ -65,19 +64,6 @@ function initMap() {
   //   animation: google.maps.Animation.DROP,
   //   title: 'Click to zoom'
   // }).addListener('click', toggleBounce));
-}
-
-function createInfoWindowForBuskers(){
-  var i, lengt=10;
-  for(i=0; i<length; i++) {
-    infoWindows[i] = createInfoWindow(i);
-  }
-}
-
-function createInfoWindow(information){
-  return new google.maps.InfoWindow({
-    content: information
-  });
 }
 
 function toggleBounce() {
