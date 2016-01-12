@@ -1,4 +1,7 @@
 //======================== Global Variable ========================
+var welcomingFlag = false;
+var last_visit_time = 0;
+var latest_visit_time = 0;
 var account_name = "";
 var account_email = "";
 var account_favorate_list = "";
@@ -83,6 +86,16 @@ $(document).ready(function() {
     $("body").append(home_template());
 
     initMap();
+
+    welcomingFlag = calLastVisitTime();
+    if(welcomingFlag) {
+      swal({
+        title: "Hello my friend!",
+        text: "Enjoy it",
+        imageUrl: "assets/image/smile.jpg",
+        imageSize: "400x200"
+      });
+    }
 
     // Auto-Carousel
     ! function($) {
@@ -202,7 +215,7 @@ $(document).ready(function() {
 
   });
 
-  $("#signup").click(function() {
+  $("#signup").add("#signup1").add("#signup2").add("#signup3").click(function() {
     context = "sign_up";
     $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
@@ -226,19 +239,51 @@ $(document).ready(function() {
           },
           success: function(result) {
             if (result == 0) {
-              alert("Now you can log in with your email!");
-              $(".home").trigger('click');
+              swal({
+                title: "Success!",
+                text: "Now you can log in!",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonText: "OK",
+                closeOnConfirm: false
+              }, function(){
+                $(".home").trigger('click');
+              });
             } else {
-              alert("You have registered!");
+              swal({
+                title: "Oops...",
+                text: "The account is registered!",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+              });
             }
           }
         });
       } else {
-        alert("Please enter your email and password!");
+        swal({
+          title: "Oops...",
+          text: "Email and password cannot be blank!",
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "OK",
+          closeOnConfirm: true,
+        });
       }
-
     });
-
   });
-
 })
+
+function calLastVisitTime() {
+  latest_visit_time = +new Date();
+  console.log(latest_visit_time);
+  console.log(last_visit_time);
+  if(last_visit_time === 0) {
+    last_visit_time = latest_visit_time;
+    return true;
+  } else {
+    last_visit_time = latest_visit_time;
+    var hours = Math.abs(latest_visit_time - last_visit_time) / 36e5;
+    console.log("The last visiting time is " + hours + " before");
+    return ((hours > 1) ? true : false);
+  }
+}
