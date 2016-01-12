@@ -13,6 +13,7 @@ $(document).ready(function() {
   // var source_home = $("#home-template").html();
   var home_template = Handlebars.compile($("#home-template").html());
   var signup_template = Handlebars.compile($("#signup-template").html());
+  var signup_p_template = Handlebars.compile($("#signup-template").html());
   var busker_template = Handlebars.compile($("#busker-template").html());
   var search_template = Handlebars.compile($("#search-box-template").html());
 
@@ -243,9 +244,9 @@ $(document).ready(function() {
                 title: "Success!",
                 text: "Now you can log in!",
                 type: "info",
-                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
                 confirmButtonText: "OK",
-                closeOnConfirm: false
+                closeOnConfirm: true,
               }, function(){
                 $(".home").trigger('click');
               });
