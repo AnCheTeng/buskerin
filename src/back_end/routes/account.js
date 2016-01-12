@@ -103,12 +103,11 @@ router.route('/searchMemberByKeyword')
 router.route('/searchMemberDefault')
   .get(parseUrlencoded, function(request, response) {
     var criteria = request.query;
-    var idx = parseInt(criteria.idx);
 
     Member.find().sort({
       'time_stamp': -1
     }).exec(function(err, foundData) {
-      response.send(foundData[idx]);
+      response.send(foundData);
     });
   });
 

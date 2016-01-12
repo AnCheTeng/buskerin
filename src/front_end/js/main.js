@@ -81,6 +81,9 @@ $(document).ready(function() {
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
     $("body").append(home_template());
+
+    initMap();
+
     // Auto-Carousel
     ! function($) {
       $(function() {

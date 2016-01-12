@@ -1,9 +1,10 @@
+var myLoc = {lat: 25, lng: 121.4};
+var markers = [];
+var map;
+
 function initMap() {
 
-  var myLoc = {lat: 25, lng: 121.4};
-  var markers = [];
-
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: myLoc
   });
@@ -78,49 +79,4 @@ function initMap() {
     }
     markers = [];
   }
-
-  /*
-  // ============ Customed Maps ============= //
-    var customMapType = new google.maps.StyledMapType([
-      {
-       stylers: [
-         {hue: '#890000'},
-         {visibility: 'simplified'},
-         {gamma: 0.5},
-         {weight: 0.5}
-       ]
-      },
-      {
-       elementType: 'labels',
-       stylers: [{visibility: 'off'}]
-      },
-      {
-       featureType: 'water',
-       stylers: [{color: '#890000'}]
-      }
-      ], {
-      name: 'Custom Style'
-      });
-    var customMapTypeId = 'custom_style';
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 9,
-      center: myLoc,
-      mapTypeControlOptions: {
-        mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
-      }
-    });
-    map.mapTypes.set(customMapTypeId, customMapType);
-    map.setMapTypeId(customMapTypeId);
-  // ===================================== //
-  */
-  // Refocus to the maker after a period of time not focusing on the center
-  /*
-  map.addListener('center_changed', function() {
-    // 3 seconds after the center of the map has changed, pan back to the marker.
-    window.setTimeout(function() {
-      map.panTo(marker.getPosition());
-    }, 3000);
-  });
-  */
 }
