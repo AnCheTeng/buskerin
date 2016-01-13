@@ -102,7 +102,10 @@ $(document).ready(function() {
 
     $(".find-them").click(function(){
       var search_category = $(this).data('category');
-      console.log(search_category);
+      $("#busker").trigger('click');
+      $(".form-wrapper input").val(search_category);
+      setTimeout('$("#search_submit").trigger("click");',500)
+
     })
 
     initMap();
@@ -214,6 +217,7 @@ $(document).ready(function() {
     });
 
     $("#search_submit").click(function() {
+
       search_target = $(".form-wrapper input").val();
       idx = 0;
       query_url = 'http://'+ targetIP + '/busker/searchBuskerByKeyword?key=' + search_target + '&idx=';
