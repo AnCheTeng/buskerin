@@ -11,6 +11,8 @@ var locations = [
      ['E', 25, 121.5, 1]
    ];
 
+var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
 function initMap() {
    map = new google.maps.Map(document.getElementById('map'), {
      zoom: 12,
@@ -31,7 +33,8 @@ function showYourPosByMarker(account_name) {
 
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-        map: map
+        map: map,
+        icon: iconBase + 'schools_maps.png'
       });
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
