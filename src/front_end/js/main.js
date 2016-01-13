@@ -1,6 +1,6 @@
 //======================== Global Variable ========================
-//var targetIP = '104.199.159.110:8888';
-var targetIP = 'localhost:8888';
+var targetIP = '104.199.159.110:8888';
+// var targetIP = 'localhost:8888';
 var welcomingFlag = false;
 var last_visit_time = 0;
 var latest_visit_time = 0;
@@ -12,6 +12,7 @@ var signup_account_name = "";
 var signup_account_email = "";
 var account_busker_Id = "";
 var context = "home";
+var toggle_count = 0;
 //======================== Global Variable ========================
 
 $(document).ready(function() {
@@ -50,7 +51,13 @@ $(document).ready(function() {
     });
   }
 
-  // $("body").append(home_template());
+
+  var toggle_back = function(){
+    toggle_count = toggle_count + 1;
+    if (toggle_count>2){
+      $('.btn-navbar').trigger("click");
+    }
+  }
 
   $("#signin").on('click', '#signin-btn', function() {
     var email = $(".email").val();
@@ -86,6 +93,7 @@ $(document).ready(function() {
               showYourPosByMarker(account_name);
             });
             $("#signin").remove();
+            // setTimeout(toggle_back,1500)
           } else {
             alert("Login fail");
           }
@@ -98,11 +106,14 @@ $(document).ready(function() {
   });
 
   $(".home").click(function() {
+
     context = "home";
     $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
     $("body").append(home_template());
+
+    toggle_back();
 
     $(".find-them").click(function(){
       var search_category = $(this).data('category');
@@ -145,6 +156,7 @@ $(document).ready(function() {
       alert("Please login!");
     } else {
       context = "favorite_list";
+      toggle_back();
       $("body > .form-wrapper").remove();
       $("body > #myCarousel1").remove();
       $("body > .container-fluid").remove();
@@ -177,6 +189,8 @@ $(document).ready(function() {
 
   $("#busker").click(function() {
     context = "busker_list";
+    toggle_back();
+
     $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
@@ -244,6 +258,7 @@ $(document).ready(function() {
 
   $("#signup").add("#signup1").add("#signup2").add("#signup3").click(function() {
     context = "sign_up";
+    toggle_back();
     $("body > .form-wrapper").remove();
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
