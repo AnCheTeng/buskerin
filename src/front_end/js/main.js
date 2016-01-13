@@ -75,7 +75,7 @@ $(document).ready(function() {
             var shot_time_btn = '<li><button type="button" class="btn btn-showtime btn-large btn-warning" id="show-time"><font face="Comic Sans MS"><b>Show Time!</b></font></button></li>';
             var after_login; $('<ul class="nav pull-right">' +user_hello+ '</ul>');
 
-            if (!account_busker_Id){
+            if (account_busker_Id){
               after_login = $('<ul class="nav pull-right">' + user_hello + shot_time_btn + '</ul>');
             } else {
               after_login = $('<ul class="nav pull-right">' + user_hello + '</ul>');
@@ -99,6 +99,11 @@ $(document).ready(function() {
     $("body > #myCarousel1").remove();
     $("body > .container-fluid").remove();
     $("body").append(home_template());
+
+    $(".find-them").click(function(){
+      var search_category = $(this).data('category');
+      console.log(search_category);
+    })
 
     initMap();
 
