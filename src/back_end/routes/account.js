@@ -39,6 +39,7 @@ router.route('/register')
           name: memberName,
           email: memberEmail,
           password: memberEmail,
+          busker_Id: "",
           favorite: [],
           lat: "",
           long: "",
@@ -72,13 +73,15 @@ router.route('/login')
         jsonArr.push({
           success: false,
           user_name: "",
-          favorite_list: ""
+          favorite_list: "",
+          busker_Id: ""
         });
       } else {
         jsonArr.push({
           success: true,
           user_name: found_Member.name,
-          favorite_list: found_Member.favorite
+          favorite_list: found_Member.favorite,
+          busker_Id: found_Member.busker_Id
         });
       }
       response.contentType('application/json');

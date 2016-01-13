@@ -6,6 +6,7 @@ var Member = new Schema({
   email: String,
   password: String,
   favorite: Array,
+  busker_Id: String,
   lat: String,
   long: String,
   time_stamp: String

@@ -43,6 +43,8 @@ router.route('/searchBuskerDefault')
   router.route('/register')
     .post(parseUrlencoded, function(request, response) {
       var newBusker = request.body;
+      var memberName = newBusker.account_name;
+      var memberEmail = newBusker.account_name;
       var buskerGroupName = newBusker.p_group_name;
       var buskerPName = newBusker.p_name;
       var buskerPType= newBusker.p_type;
@@ -50,6 +52,7 @@ router.route('/searchBuskerDefault')
       var buskerPImg = newBusker.p_img;
       var buskerPWebpage= newBusker.p_webpage;
       var buskerPEmail = newBusker.p_email;
+      console.log('MemberBeBusker');
 
       Busker.findOne({
         group_name: buskerGroupName,
@@ -57,8 +60,9 @@ router.route('/searchBuskerDefault')
         perform_type: buskerPType
       }).exec(function(err, found_Member) {
         if (!found_Member) {
+          var newNo = randomIntFromInterval(1000000,200000000);
           var newMember = new Busker({
-            num: randomIntFromInterval(1000000,2000000),
+            num: newNo,
             group_name: buskerGroupName,
             performer_name: buskerPName,
             perform_type: buskerPType,
@@ -70,6 +74,19 @@ router.route('/searchBuskerDefault')
             time_stamp: +new Date()
           });
           newMember.save();
+
+          Member.findOne({
+            name: memberName,
+            email: memberEmail
+          }).exec(function(err, found_Member) {
+            if(!found_Member) {
+              console.log('No this member');
+            } else {
+              console.log('busker_Id: ' + newNo);
+              found_Member.busker_Id = newNo;
+            }
+            found_Member.save();
+          });
           response.send('0');
         } else {
           response.send('1');

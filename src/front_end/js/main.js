@@ -1,6 +1,6 @@
 //======================== Global Variable ========================
 var targetIP = '104.199.159.110:8888';
-// var targetIP = 'localhost:8888';
+//var targetIP = 'localhost:8888';
 var welcomingFlag = false;
 var last_visit_time = 0;
 var latest_visit_time = 0;
@@ -8,6 +8,8 @@ var account_name = "";
 var account_email = "";
 var account_favorate_list = "";
 var account_password = "";
+var signup_account_name = "";
+var signup_account_email = "";
 var context = "home";
 //======================== Global Variable ========================
 
@@ -89,6 +91,8 @@ $(document).ready(function() {
     $("body").append(home_template());
 
     initMap();
+
+    showMarkers();
 
     welcomingFlag = calLastVisitTime();
     if(welcomingFlag) {
@@ -229,6 +233,9 @@ $(document).ready(function() {
       var buskerCheck = ($('#buskerCheckBox').is(":checked")) ? true : false;
       console.log('buskerCheck: ' + buskerCheck);
 
+      signup_account_name = name;
+      signup_account_email = email;
+
       if ((email && password) != "") {
         $.ajax('http://'+ targetIP + '/account/register', {
           type: 'POST',
@@ -240,7 +247,7 @@ $(document).ready(function() {
           },
           success: function(result) {
             console.log('result: ' + result);
-            if (result == 0 || result == 2) {
+            if (result == 0) {
               swal({
                 title: "Success!",
                 text: "Now you can log in!",
@@ -249,12 +256,18 @@ $(document).ready(function() {
                 confirmButtonText: "OK",
                 closeOnConfirm: true,
               }, function(){
-                console.log('result: ' + result);
-                if(result == 2) {
-                  signUpPerformer();
-                } else {
-                  $(".home").trigger('click');
-                }
+                $(".home").trigger('click');
+              });
+            } else if (result == 2) {
+              swal({
+                title: "Great!",
+                text: "Let's register your performance",
+                type: "info",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+              }, function() {
+                signUpPerformer();
               });
             } else {
               swal({
@@ -299,6 +312,8 @@ $(document).ready(function() {
         $.ajax('http://'+ targetIP + '/busker/register', {
           type: 'POST',
           data: {
+            "account_name": signup_account_name,
+            "account_email": signup_account_email,
             "p_group_name": p_group_name,
             "p_name": p_name,
             "p_type": p_type,
