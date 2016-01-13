@@ -53,8 +53,8 @@ $(document).ready(function() {
 
 
   var toggle_back = function(){
-    toggle_count = toggle_count + 1;
-    if (toggle_count>2){
+    if (toggle_count%2 != 0){
+      console.log(toggle_count);
       $('.btn-navbar').trigger("click");
     }
   }
@@ -113,6 +113,7 @@ $(document).ready(function() {
     $("body > .container-fluid").remove();
     $("body").append(home_template());
 
+
     toggle_back();
 
     $(".find-them").click(function(){
@@ -149,6 +150,9 @@ $(document).ready(function() {
 
   $(".home").trigger('click');
 
+  $('.btn-navbar').click(function(){
+    toggle_count=toggle_count+1;
+  })
 
 
   $("#favorite").click(function() {
