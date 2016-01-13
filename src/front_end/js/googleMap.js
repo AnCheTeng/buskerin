@@ -1,7 +1,7 @@
 var map;
 var infoWindowww;
 var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
-var infowindow;
+var infowindow = new google.maps.InfoWindow();
 var marker, i;
 var locations = [
      ['A', 25, 121.4, 4],
@@ -12,17 +12,23 @@ var locations = [
    ];
 
 function initMap() {
-
    map = new google.maps.Map(document.getElementById('map'), {
-     zoom: 10,
-     center: new google.maps.LatLng(25.019818307021946, 121.54214659134442),
+     zoom: 12,
+     center: new google.maps.LatLng(myLoc.lat, myLoc.lng),
      mapTypeId: google.maps.MapTypeId.ROADMAP
    });
+}
 
+function showYourPosByMarker(account_name) {
+
+  console.log('showYourPosByMarker');
   // // Show the position of the user using this webpage
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      // map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+
+      myLoc.lat = position.coords.latitude;
+      myLoc.lng = position.coords.longitude;
+
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
         map: map
@@ -30,7 +36,7 @@ function initMap() {
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
-          infowindow.setContent('NTU');
+          infowindow.setContent(account_name);
           infowindow.open(map, marker);
         }
       })(marker, i));
@@ -39,21 +45,11 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
-
-  // Add a marker to toggle Bounce
-  // markers.push(new google.maps.Marker({
-  //   position: {lat: 25, lng: 121.5},
-  //   map: map,
-  //   animation: google.maps.Animation.DROP,
-  //   title: 'Click to zoom'
-  // }).addListener('click', toggleBounce));
 }
 
 function showMarkers() {
 
   console.log('showMarkers');
-
-  infowindow = new google.maps.InfoWindow();
 
   for (i = 0; i < locations.length; i++) {
    marker = new google.maps.Marker({

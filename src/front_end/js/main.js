@@ -81,6 +81,10 @@ $(document).ready(function() {
               after_login = $('<ul class="nav pull-right">' + user_hello + '</ul>');
             }
             $(".nav-collapse").append(after_login);
+            $("#show-time").click(function() {
+              console.log('show_time button OnClicked');
+              showYourPosByMarker(account_name);
+            });
             $("#signin").remove();
           } else {
             alert("Login fail");
@@ -107,7 +111,7 @@ $(document).ready(function() {
 
     initMap();
 
-    showMarkers();
+    // showMarkers();
 
     welcomingFlag = calLastVisitTime();
     if(welcomingFlag) {

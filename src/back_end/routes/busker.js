@@ -44,7 +44,7 @@ router.route('/register')
   .post(parseUrlencoded, function(request, response) {
     var newBusker = request.body;
     var memberName = newBusker.account_name;
-    var memberEmail = newBusker.account_name;
+    var memberEmail = newBusker.account_email;
     var buskerGroupName = newBusker.p_group_name;
     var buskerPName = newBusker.p_name;
     var buskerPType= newBusker.p_type;
@@ -93,7 +93,30 @@ router.route('/register')
       }
       response.end();
     });
-  });  
+  });
+
+  router.route('/locate')
+    .post(parseUrlencoded, function(request, response) {
+      var newBusker = request.body;
+      var memberName = newBusker.account_name;
+      var memberEmail = newBusker.account_email;
+      var memberBuskerId = newBusker.busker_Id;
+      var memberLocateLat = newBusker.lat;
+      var memberLocateLong = newBusker.long;
+
+      Busker.findOne({
+        num: memberBuskerId,
+      }).exec(function(err, found_Member) {
+        if (found_Member) {
+          found_Member.lat = memberLocateLat;
+          found_Member.long = memberLocateLong;
+          response.send('0');
+        } else {
+          response.send('1');
+        }
+        response.end();
+      });
+    });
 
 function randomIntFromInterval(min,max) {
     return Math.floor(Math.random()*(max-min+1)+min);

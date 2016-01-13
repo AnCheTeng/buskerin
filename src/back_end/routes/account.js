@@ -41,8 +41,6 @@ router.route('/register')
           password: memberEmail,
           busker_Id: "",
           favorite: [],
-          lat: "",
-          long: "",
           time_stamp: +new Date()
         });
         newMember.save();
