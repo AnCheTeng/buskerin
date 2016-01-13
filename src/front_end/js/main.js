@@ -8,6 +8,7 @@ var account_name = "";
 var account_email = "";
 var account_favorate_list = "";
 var account_password = "";
+var account_busker_Id = "";
 var context = "home";
 //======================== Global Variable ========================
 
@@ -66,9 +67,18 @@ $(document).ready(function() {
           account_favorate_list = result[0].favorite_list;
           account_password = password;
           account_email = email;
+          account_busker_Id = result[0].busker_Id;
           if (result[0].success == true) {
-            var user = $('<ul class="nav pull-right"><li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + account_name + '</b></font></a></li></ul>');
-            $(".nav-collapse").append(user);
+            var user_hello = '<li><a href="#"><font size="5px" face="Comic Sans MS"><b>Hello! ' + account_name + '</b></font></a></li>';
+            var shot_time_btn = '<li><button type="button" class="btn btn-showtime btn-large btn-warning" id="show-time"><font face="Comic Sans MS"><b>Show Time!</b></font></button></li>';
+            var after_login; $('<ul class="nav pull-right">' +user_hello+ '</ul>');
+
+            if (!account_busker_Id){
+              after_login = $('<ul class="nav pull-right">' + user_hello + shot_time_btn + '</ul>');
+            } else {
+              after_login = $('<ul class="nav pull-right">' + user_hello + '</ul>');
+            }
+            $(".nav-collapse").append(after_login);
             $("#signin").remove();
           } else {
             alert("Login fail");

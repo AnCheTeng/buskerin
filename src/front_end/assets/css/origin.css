@@ -67,7 +67,11 @@ body {
 .navbar .navbar-form {
   margin-top: 8px;
 }
-
+.navbar .btn-showtime {
+  /*padding: 15px 20px;*/
+  width: 100%;
+  margin-top: 8px;
+}
 /* CUSTOMIZE THE CAROUSEL -------------------------------------------------- */
 
 .hero-unit {
