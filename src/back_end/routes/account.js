@@ -34,6 +34,7 @@ router.route('/register')
       email: memberEmail
     }).exec(function(err, found_Member) {
       if (!found_Member) {
+        console.log('memberBeBuskers: ' + memberBeBuskers);
         var newMember = new Member({
           name: memberName,
           email: memberEmail,
@@ -44,7 +45,11 @@ router.route('/register')
           time_stamp: +new Date()
         });
         newMember.save();
-        response.send('0');
+
+        if(memberBeBuskers === 'true')
+          response.send('2');
+        else
+          response.send('0');
       } else {
         response.send('1');
       }

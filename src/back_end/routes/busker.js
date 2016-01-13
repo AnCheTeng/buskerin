@@ -40,4 +40,46 @@ router.route('/searchBuskerDefault')
     });
   });
 
+  router.route('/register')
+    .post(parseUrlencoded, function(request, response) {
+      var newBusker = request.body;
+      var buskerGroupName = newBusker.p_group_name;
+      var buskerPName = newBusker.p_name;
+      var buskerPType= newBusker.p_type;
+      var buskerPContent = newBusker.p_content;
+      var buskerPImg = newBusker.p_img;
+      var buskerPWebpage= newBusker.p_webpage;
+      var buskerPEmail = newBusker.p_email;
+
+      Busker.findOne({
+        group_name: buskerGroupName,
+        performer_name: buskerPName,
+        perform_type: buskerPType
+      }).exec(function(err, found_Member) {
+        if (!found_Member) {
+          var newMember = new Busker({
+            num: randomIntFromInterval(1000000,2000000),
+            group_name: buskerGroupName,
+            performer_name: buskerPName,
+            perform_type: buskerPType,
+            perform_content: buskerPContent,
+            email: buskerPEmail,
+            img: buskerPImg,
+            lat: "",
+            long: "",
+            time_stamp: +new Date()
+          });
+          newMember.save();
+          response.send('0');
+        } else {
+          response.send('1');
+        }
+        response.end();
+      });
+    });
+
+function randomIntFromInterval(min,max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 module.exports = router;

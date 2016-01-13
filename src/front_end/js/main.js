@@ -1,4 +1,6 @@
 //======================== Global Variable ========================
+var targetIP = '104.199.159.110:8888';
+// var targetIP = 'localhost:8888';
 var welcomingFlag = false;
 var last_visit_time = 0;
 var latest_visit_time = 0;
@@ -13,7 +15,7 @@ $(document).ready(function() {
   // var source_home = $("#home-template").html();
   var home_template = Handlebars.compile($("#home-template").html());
   var signup_template = Handlebars.compile($("#signup-template").html());
-  var signup_p_template = Handlebars.compile($("#signup-template").html());
+  var signup_p_template = Handlebars.compile($("#signup-performer-template").html());
   var busker_template = Handlebars.compile($("#busker-template").html());
   var search_template = Handlebars.compile($("#search-box-template").html());
 
@@ -28,7 +30,7 @@ $(document).ready(function() {
           alert("Please login!");
         } else {
           console.log(busker_num);
-          $.ajax('http://104.199.159.110:8888/account/favorite', {
+          $.ajax('http://'+ targetIP + '/account/favorite', {
             type: 'POST',
             data: {
               "performer_no": busker_num,
@@ -53,7 +55,7 @@ $(document).ready(function() {
 
     if ((email && password) != "") {
 
-      $.ajax('http://104.199.159.110:8888/account/login', {
+      $.ajax('http://'+ targetIP + '/account/login', {
         type: 'POST',
         data: {
           "email": email,
@@ -129,7 +131,7 @@ $(document).ready(function() {
         var busker_num = delete_unit.data('num');
 
         console.log(busker_num);
-        $.ajax('http://104.199.159.110:8888/account/favorite', {
+        $.ajax('http://'+ targetIP + '/account/favorite', {
           type: 'DELETE',
           data: {
             "performer_no": busker_num,
@@ -157,7 +159,7 @@ $(document).ready(function() {
     var temp_busker_list = "";
     var state = "default";
     var idx = 0;
-    var query_url = 'http://104.199.159.110:8888/busker/searchBuskerDefault?idx=';
+    var query_url = 'http://'+ targetIP + '/busker/searchBuskerDefault?idx=';
     var search_target = "";
 
     $.ajax(query_url + idx, {
@@ -195,7 +197,7 @@ $(document).ready(function() {
     $("#search_submit").click(function() {
       search_target = $(".form-wrapper input").val();
       idx = 0;
-      query_url = 'http://104.199.159.110:8888/busker/searchBuskerByKeyword?key=' + search_target + '&idx=';
+      query_url = 'http://'+ targetIP + '/busker/searchBuskerByKeyword?key=' + search_target + '&idx=';
       console.log(search_target);
       console.log(query_url);
       if (search_target != "") {
@@ -211,9 +213,6 @@ $(document).ready(function() {
         });
       }
     });
-
-
-
   });
 
   $("#signup").add("#signup1").add("#signup2").add("#signup3").click(function() {
@@ -228,15 +227,85 @@ $(document).ready(function() {
       var password = $("#signup_password").val();
       var name = $("#signup_name").val();
       var buskerCheck = ($('#buskerCheckBox').is(":checked")) ? true : false;
+      console.log('buskerCheck: ' + buskerCheck);
 
       if ((email && password) != "") {
-        $.ajax('http://104.199.159.110:8888/account/register', {
+        $.ajax('http://'+ targetIP + '/account/register', {
           type: 'POST',
           data: {
             "name": name,
             "email": email,
             "password": password,
             "beBuskers": buskerCheck
+          },
+          success: function(result) {
+            console.log('result: ' + result);
+            if (result == 0 || result == 2) {
+              swal({
+                title: "Success!",
+                text: "Now you can log in!",
+                type: "info",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+              }, function(){
+                console.log('result: ' + result);
+                if(result == 2) {
+                  signUpPerformer();
+                } else {
+                  $(".home").trigger('click');
+                }
+              });
+            } else {
+              swal({
+                title: "Oops...",
+                text: "The account is registered!",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: true,
+              });
+            }
+          }
+        });
+      } else {
+        swal({
+          title: "Oops...",
+          text: "User information cannot be empty!",
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "OK",
+          closeOnConfirm: true,
+        });
+      }
+    });
+  });
+
+  function signUpPerformer() {
+    context = "sign_up_p";
+    $("body > .form-wrapper").remove();
+    $("body > #myCarousel1").remove();
+    $("body > .container-fluid").remove();
+    $("body").append(signup_p_template());
+
+    $("#signup_p_btn").click(function() {
+      var p_group_name = $("#signup_p_group_name").val();
+      var p_name = $("#signup_p_name").val();
+      var p_type = $("#signup_p_type").val();
+      var p_content = $("#signup_p_content").val();
+      var p_img = $("#signup_p_content").val();
+      var p_webpage = $("#signup_p_content").val();
+      var p_email = $("#signup_p_email").val();
+
+      if ((p_group_name && p_name && p_type && p_content && p_name && p_email) != "") {
+        $.ajax('http://'+ targetIP + '/busker/register', {
+          type: 'POST',
+          data: {
+            "p_group_name": p_group_name,
+            "p_name": p_name,
+            "p_type": p_type,
+            "p_content": p_content,
+            "p_img": p_img,
+            "p_webpage": p_webpage,
+            "p_email": p_email
           },
           success: function(result) {
             if (result == 0) {
@@ -264,27 +333,27 @@ $(document).ready(function() {
       } else {
         swal({
           title: "Oops...",
-          text: "Email and password cannot be blank!",
+          text: "Busker Information should not be empty!",
           confirmButtonColor: "#DD6B55",
           confirmButtonText: "OK",
           closeOnConfirm: true,
         });
       }
     });
-  });
-})
-
-function calLastVisitTime() {
-  latest_visit_time = +new Date();
-  console.log(latest_visit_time);
-  console.log(last_visit_time);
-  if(last_visit_time === 0) {
-    last_visit_time = latest_visit_time;
-    return true;
-  } else {
-    last_visit_time = latest_visit_time;
-    var hours = Math.abs(latest_visit_time - last_visit_time) / 36e5;
-    console.log("The last visiting time is " + hours + " before");
-    return ((hours > 1) ? true : false);
   }
-}
+
+  function calLastVisitTime() {
+    latest_visit_time = +new Date();
+    console.log(latest_visit_time);
+    console.log(last_visit_time);
+    if(last_visit_time === 0) {
+      last_visit_time = latest_visit_time;
+      return true;
+    } else {
+      last_visit_time = latest_visit_time;
+      var hours = Math.abs(latest_visit_time - last_visit_time) / 36e5;
+      console.log("The last visiting time is " + hours + " before");
+      return ((hours > 1) ? true : false);
+    }
+  }
+})
