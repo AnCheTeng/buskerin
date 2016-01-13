@@ -1,7 +1,7 @@
 var map;
 var infoWindowww;
 var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
-var infowindow = new google.maps.InfoWindow();
+var infowindow;
 var marker, i;
 var locations = [
      ['A', 25, 121.4, 4],
@@ -13,7 +13,7 @@ var locations = [
 
 function initMap() {
 
-   var map = new google.maps.Map(document.getElementById('map'), {
+   map = new google.maps.Map(document.getElementById('map'), {
      zoom: 10,
      center: new google.maps.LatLng(25.019818307021946, 121.54214659134442),
      mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -50,19 +50,24 @@ function initMap() {
 }
 
 function showMarkers() {
-   for (i = 0; i < locations.length; i++) {
-     marker = new google.maps.Marker({
-       position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-       map: map
-     });
 
-     google.maps.event.addListener(marker, 'click', (function(marker, i) {
-       return function() {
-         infowindow.setContent(locations[i][0]);
-         infowindow.open(map, marker);
-       }
-     })(marker, i));
-   }
+  console.log('showMarkers');
+
+  infowindow = new google.maps.InfoWindow();
+
+  for (i = 0; i < locations.length; i++) {
+   marker = new google.maps.Marker({
+     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+     map: map
+   });
+
+   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+     return function() {
+       infowindow.setContent(locations[i][0]);
+       infowindow.open(map, marker);
+     }
+   })(marker, i));
+  }
 }
 
 function toggleBounce() {
