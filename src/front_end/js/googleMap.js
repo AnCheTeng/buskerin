@@ -2,7 +2,6 @@ var map;
 var infoWindowww;
 var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
 var infowindow = new google.maps.InfoWindow();
-var marker;
 var markers = [];
 var locations = [];
 var length, lengthLoc, lengthLocFavorite;
@@ -31,13 +30,13 @@ function showYourPosByMarker() {
 function success(position) {
 
   var i;
-  
+
   myLoc.lat = position.coords.latitude;
   myLoc.lng = position.coords.longitude;
   console.log('myLoc lat: ' + myLoc.lat);
   console.log('myLoc lng: ' + myLoc.lng);
 
-  marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({
     position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
     map: map,
     icon: iconBase + 'schools_maps.png'
@@ -143,24 +142,24 @@ function showMarkers() {
   }
 
   for(var i=0; i < locations.length; i++) {
-   marker = new google.maps.Marker({
-     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-     map: map
-   });
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+      map: map
+    });
 
-   infowindow_array[i].setContent(locations[i][0]);
-   infowindow_array[i].open(map, marker);
+    infowindow_array[i].setContent(locations[i][0]);
+    infowindow_array[i].open(map, marker);
 
-   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
      return function() {
        map.setZoom(14);
        map.setCenter(marker.getPosition());
        infowindow.setContent(locations[i][0]);
        infowindow.open(map, marker);
      }
-   })(marker, i));
+    })(marker, i));
 
-   markers.push(marker);
+    markers.push(marker);
   }
 
   map.setZoom(14);

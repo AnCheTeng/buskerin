@@ -145,6 +145,36 @@ $(document).ready(function() {
     showAllBuskersOnMap();
     // showMarkers();
 
+    $("#search_favorite").click(function(){
+      if(account_name !== "") {
+        // renew favorite list
+        $.ajax('http://'+ targetIP + '/account/login', {
+          type: 'POST',
+          data: {
+            "email": account_email,
+            "password": account_password
+          },
+          success: function(result) {
+            account_name = result[0].user_name;
+            account_favorate_list = result[0].favorite_list;
+            account_password = account_password;
+            account_email = account_email;
+            account_busker_Id = result[0].busker_Id;
+
+            showAllFavoriteBuskersOnMap();
+          }
+        });
+      } else {
+        swal({
+          title: "Oops...",
+          text: "Please log in first",
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "OK",
+          closeOnConfirm: true,
+        });
+      }
+    });
+
     welcomingFlag = calLastVisitTime();
     if(welcomingFlag) {
       swal({
@@ -280,36 +310,6 @@ $(document).ready(function() {
         });
       }
     });
-  });
-
-  $("#search_favorite").click(function(){
-    if(account_name !== "") {
-      // renew favorite list
-      $.ajax('http://'+ targetIP + '/account/login', {
-        type: 'POST',
-        data: {
-          "email": account_email,
-          "password": account_password
-        },
-        success: function(result) {
-          account_name = result[0].user_name;
-          account_favorate_list = result[0].favorite_list;
-          account_password = account_password;
-          account_email = account_email;
-          account_busker_Id = result[0].busker_Id;
-
-          showAllFavoriteBuskersOnMap();
-        }
-      });
-    } else {
-      swal({
-        title: "Oops...",
-        text: "Please log in first",
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "OK",
-        closeOnConfirm: true,
-      });
-    }
   });
 
   $("#signup").add("#signup1").add("#signup2").add("#signup3").click(function() {
