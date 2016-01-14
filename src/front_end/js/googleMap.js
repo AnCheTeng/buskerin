@@ -26,29 +26,50 @@ function showYourPosByMarker(account_name) {
   console.log('showYourPosByMarker');
   // // Show the position of the user using this webpage
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-
-      myLoc.lat = position.coords.latitude;
-      myLoc.lng = position.coords.longitude;
-
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-        map: map,
-        icon: iconBase + 'schools_maps.png'
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(account_name);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-    });
+    navigator.geolocation.getCurrentPosition(success,error);
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
 }
+
+function success(position) {
+  myLoc.lat = position.coords.latitude;
+  myLoc.lng = position.coords.longitude;
+  console.log('myLoc lat: ' + myLoc.lat);
+  console.log('myLoc lng: ' + myLoc.lng);
+
+  marker = new google.maps.Marker({
+    position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+    map: map,
+    icon: iconBase + 'schools_maps.png'
+  });
+
+  google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    return function() {
+      map.setZoom(14);
+      map.setCenter(marker.getPosition());
+      infowindow.setContent(account_name);
+      infowindow.open(map, marker);
+    }
+  })(marker, i));
+
+  $.ajax('http://'+ targetIP + '/busker/locate', {
+    type: 'POST',
+    data: {
+      "busker_Id": account_busker_Id,
+      "busker_lat": myLoc.lat,
+      "busker_long": myLoc.lng
+    },
+    success: function(result) {
+      if(result == 0) {
+        console.log("Successfully save your location");
+      } else {
+        console.log("Fail to save your location");
+      }
+    }
+  });
+};
 
 function showMarkers() {
 
@@ -62,12 +83,18 @@ function showMarkers() {
 
    google.maps.event.addListener(marker, 'click', (function(marker, i) {
      return function() {
+       map.setZoom(14);
+       map.setCenter(marker.getPosition());
        infowindow.setContent(locations[i][0]);
        infowindow.open(map, marker);
      }
    })(marker, i));
   }
 }
+
+function error() {
+  console.error('Error');
+};
 
 function toggleBounce() {
   if (this.getAnimation() !== null) {

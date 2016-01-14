@@ -1,6 +1,6 @@
 //======================== Global Variable ========================
-var targetIP = '104.199.159.110:8888';
-// var targetIP = 'localhost:8888';
+//var targetIP = '104.199.159.110:8888';
+var targetIP = 'localhost:8888';
 var welcomingFlag = false;
 var last_visit_time = 0;
 var latest_visit_time = 0;

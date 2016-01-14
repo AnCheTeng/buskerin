@@ -98,11 +98,13 @@ router.route('/register')
   router.route('/locate')
     .post(parseUrlencoded, function(request, response) {
       var newBusker = request.body;
-      var memberName = newBusker.account_name;
-      var memberEmail = newBusker.account_email;
       var memberBuskerId = newBusker.busker_Id;
-      var memberLocateLat = newBusker.lat;
-      var memberLocateLong = newBusker.long;
+      var memberLocateLat = newBusker.busker_lat;
+      var memberLocateLong = newBusker.busker_long;
+
+      console.log('locate id: ' + memberBuskerId);
+      console.log('locate lat: ' + memberLocateLat);
+      console.log('locate lng: ' + memberLocateLong);
 
       Busker.findOne({
         num: memberBuskerId,
