@@ -2,7 +2,7 @@ var map;
 var infoWindowww;
 var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
 var infowindow = new google.maps.InfoWindow();
-var marker, i, k;
+var marker;
 var locations = [];
 var length, lengthLoc, lengthLocFavorite;
 
@@ -16,8 +16,7 @@ function initMap() {
    });
 }
 
-function showYourPosByMarker(account_name) {
-
+function showYourPosByMarker() {
   console.log('showYourPosByMarker');
   // // Show the position of the user using this webpage
   if (navigator.geolocation) {
@@ -29,6 +28,9 @@ function showYourPosByMarker(account_name) {
 }
 
 function success(position) {
+
+  var i;
+
   myLoc.lat = position.coords.latitude;
   myLoc.lng = position.coords.longitude;
   console.log('myLoc lat: ' + myLoc.lat);
@@ -44,7 +46,7 @@ function success(position) {
     return function() {
       map.setZoom(14);
       map.setCenter(marker.getPosition());
-      infowindow.setContent(account_name);
+      infowindow.setContent('I am here');
       infowindow.open(map, marker);
     }
   })(marker, i));
@@ -78,22 +80,23 @@ function showAllBuskersOnMap() {
       console.log(result);
       console.log(result.length);
       if(result !== undefined) {
-        for(i=0, length=result.length; i<length; i++) {
+        for(var i=0, length=result.length; i<length; i++) {
           shouldAdd = true;
           var newName = result[i].performer_name;
           lengthLoc=locations.length;
           if(lengthLoc !== 0) {
-            for(k=0; k<lengthLoc; k++) {
+            for(var k=0; k<lengthLoc; k++) {
               if(locations[k][0] == newName && shouldAdd === true) {
                 shouldAdd = false;
               }
             }
           }
-          if(shouldAdd == true)
+          if(shouldAdd == true) {
             locations.push([result[i].performer_name, parseFloat(result[i].lat), parseFloat(result[i].long)]);
-
-          if(i==length-1)
+          }
+          if(i == (length-1)) {
             showMarkers();
+          }
         }
       }
     }
@@ -102,17 +105,23 @@ function showAllBuskersOnMap() {
 
 function showAllFavoriteBuskersOnMap() {
 
-  locations = [];
-  lengthLocFavorite=account_favorate_list.length;
+  console.log('showAllFavoriteBuskersOnMap');
 
-  for(i=0; i<lengthLocFavorite; i++) {
+  locations = [];
+  lengthLocFavorite = account_favorate_list.length;
+
+  console.log(account_favorate_list.length);
+
+  for(var i=0; i<lengthLocFavorite; i++) {
     if(account_favorate_list[i].lat !== "") {
       console.log('performance name: ' + account_favorate_list[i].performer_name);
       console.log('performance lat: ' + account_favorate_list[i].lat);
       console.log('performance lng: ' + account_favorate_list[i].long);
-      locations.push([account_favorate_list[i].performer_name, parseFloat(account_favorate_list[i].lat), parseFloat(account_favorate_list[i].long)]);
+      locations.push([account_favorate_list[i].performer_name,
+        parseFloat(account_favorate_list[i].lat),
+        parseFloat(account_favorate_list[i].long)]);
     }
-    if(i==lengthLocFavorite-1) {
+    if(i==(lengthLocFavorite-1)) {
       showMarkers();
     }
   }
@@ -124,13 +133,13 @@ function showMarkers() {
   console.log("showMarkers");
   var infowindow_array = [];
 
-  for(k=0, lengthLoc=locations.length; k<lengthLoc; k++) {
+  for(var k=0, lengthLoc=locations.length; k<lengthLoc; k++) {
     console.log(locations[k]);
     var temp_infowindow = new google.maps.InfoWindow();
     infowindow_array[k] = temp_infowindow;
   }
 
-  for (i = 0; i < locations.length; i++) {
+  for(var i=0; i < locations.length; i++) {
    marker = new google.maps.Marker({
      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
      map: map
@@ -151,7 +160,6 @@ function showMarkers() {
 
   map.setZoom(14);
   map.setCenter(marker.getPosition());
-
 }
 
 function error() {

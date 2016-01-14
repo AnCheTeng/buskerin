@@ -60,9 +60,8 @@ router.route('/register')
       perform_type: buskerPType
     }).exec(function(err, found_Member) {
       if (!found_Member) {
-        var newNo = randomIntFromInterval(1000000,200000000);
+        // var newNo = randomIntFromInterval(1000000,200000000);
         var newMember = new Busker({
-          num: newNo,
           group_name: buskerGroupName,
           performer_name: buskerPName,
           perform_type: buskerPType,
@@ -73,7 +72,10 @@ router.route('/register')
           long: "",
           time_stamp: +new Date()
         });
+        newNo = newMember._id;
+        newMember.num = newNo;
         newMember.save();
+
 
         Member.findOne({
           name: memberName,
@@ -126,7 +128,6 @@ router.route('/register')
       Busker.find({
         lat: { $exists: true, $nin: [ "" ] }
       }).exec(function(err, foundData) {
-        console.log('locateAllBuskers ' + foundData);
         response.send(foundData);
       });
     });

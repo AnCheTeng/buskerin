@@ -1,6 +1,6 @@
 //======================== Global Variable ========================
-var targetIP = '104.199.159.110:8888';
-// var targetIP = 'localhost:8888';
+// var targetIP = '104.199.159.110:8888';
+var targetIP = 'localhost:8888';
 var welcomingFlag = false;
 var last_visit_time = 0;
 var latest_visit_time = 0;
@@ -95,7 +95,7 @@ $(document).ready(function() {
             $(".nav-collapse").append(after_login);
             $("#show-time").click(function() {
               console.log('show_time button OnClicked');
-              showYourPosByMarker(account_name);
+              showYourPosByMarker();
             });
             $("#signin").remove();
             // setTimeout(toggle_back,1500)
@@ -296,7 +296,7 @@ $(document).ready(function() {
         account_password = account_password;
         account_email = account_email;
         account_busker_Id = result[0].busker_Id;
-        
+
         showAllFavoriteBuskersOnMap();
       }
     });
@@ -388,8 +388,8 @@ $(document).ready(function() {
       var p_name = $("#signup_p_name").val();
       var p_type = $("#signup_p_type").val();
       var p_content = $("#signup_p_content").val();
-      var p_img = $("#signup_p_content").val();
-      var p_webpage = $("#signup_p_content").val();
+      var p_img = $("#signup_p_img").val();
+      var p_webpage = $("#signup_p_webpage").val();
       var p_email = $("#signup_p_email").val();
 
       if ((p_group_name && p_name && p_type && p_content && p_name && p_email) != "") {
