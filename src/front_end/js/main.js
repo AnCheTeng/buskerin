@@ -31,7 +31,12 @@ $(document).ready(function() {
         var busker_unit = $(this).closest('.hero-unit');
         var busker_num = busker_unit.data('num');
         if (account_name == "") {
-          alert("Please login!");
+          swal({
+            title: "Please Log In",
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "OK",
+            closeOnConfirm: true,
+          });
         } else {
           console.log(busker_num);
           $.ajax('http://'+ targetIP + '/account/favorite', {
@@ -95,13 +100,24 @@ $(document).ready(function() {
             $("#signin").remove();
             // setTimeout(toggle_back,1500)
           } else {
-            alert("Login fail");
+            swal({
+              title: "Log In Fail...",
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK",
+              closeOnConfirm: true,
+            });
           }
         }
       });
 
     } else {
-      alert("Please enter your email and password!");
+      swal({
+        title: "Oops...",
+        text: "Please enter your email and password!",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "OK",
+        closeOnConfirm: true,
+      });
     }
   });
 
@@ -158,7 +174,12 @@ $(document).ready(function() {
 
   $("#favorite").click(function() {
     if (account_name == "") {
-      alert("Please login!");
+      swal({
+        title: "Please Log In",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "OK",
+        closeOnConfirm: true,
+      });
     } else {
       context = "favorite_list";
       toggle_back();
