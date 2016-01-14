@@ -2,14 +2,9 @@ var map;
 var infoWindowww;
 var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
 var infowindow = new google.maps.InfoWindow();
-var marker, i;
-var locations = [
-     ['A', 25, 121.4, 4],
-     ['B', 25, 121.41, 5],
-     ['C', 25, 121.43, 3],
-     ['D', 25, 121.47, 2],
-     ['E', 25, 121.5, 1]
-   ];
+var marker, i, k;
+var locations = [];
+var length, lengthLoc;
 
 var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
@@ -72,13 +67,33 @@ function success(position) {
 };
 
 function showAllBuskersOnMap() {
+
+  var shouldAdd;
+
   console.log('showAllBuskersOnMap');
   $.ajax('http://'+ targetIP + '/busker/locateAllBuskers', {
     type: 'GET',
     success: function(result) {
-      if(!result) {
-        console.log('result lat: ' + result[0].lat);
-        console.log('result lat: ' + result[1].long);
+      console.log(result);
+      console.log(result.length);
+      if(result !== undefined) {
+        for(i=0, length=result.length; i<length; i++) {
+          shouldAdd = true;
+          var newName = result[i].performer_name;
+          lengthLoc=locations.length;
+          if(lengthLoc !== 0) {
+            for(k=0; k<lengthLoc; k++) {
+              if(locations[k][0] == newName && shouldAdd === true) {
+                shouldAdd = false;
+              }
+            }
+          }
+          if(shouldAdd == true)
+            locations.push([result[i].performer_name, parseFloat(result[i].lat), parseFloat(result[i].long)]);
+
+          if(i==length-1)
+            showMarkers();
+        }
       }
     }
   });
@@ -86,7 +101,9 @@ function showAllBuskersOnMap() {
 
 function showMarkers() {
 
-  console.log('showMarkers');
+  for(k=0, lengthLoc=locations.length; k<lengthLoc; k++) {
+    console.log(locations[k]);
+  }
 
   for (i = 0; i < locations.length; i++) {
    marker = new google.maps.Marker({

@@ -126,6 +126,7 @@ router.route('/register')
       Busker.find({
         lat: { $exists: true, $nin: [ "" ] }
       }).exec(function(err, foundData) {
+        console.log('locateAllBuskers ' + foundData);
         response.send(foundData);
       });
     });
