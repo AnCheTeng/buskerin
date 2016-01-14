@@ -38,7 +38,7 @@ router.route('/register')
         var newMember = new Member({
           name: memberName,
           email: memberEmail,
-          password: memberEmail,
+          password: memberPWD,
           busker_Id: "",
           favorite: [],
           time_stamp: +new Date()
