@@ -4,7 +4,7 @@ var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
 var infowindow = new google.maps.InfoWindow();
 var marker, i, k;
 var locations = [];
-var length, lengthLoc;
+var length, lengthLoc, lengthLocFavorite;
 
 var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
@@ -69,6 +69,7 @@ function success(position) {
 function showAllBuskersOnMap() {
 
   var shouldAdd;
+  locations = [];
 
   console.log('showAllBuskersOnMap');
   $.ajax('http://'+ targetIP + '/busker/locateAllBuskers', {
@@ -99,7 +100,28 @@ function showAllBuskersOnMap() {
   });
 }
 
+function showAllFavoriteBuskersOnMap() {
+
+  locations = [];
+  lengthLocFavorite=account_favorate_list.length;
+
+  for(i=0; i<lengthLocFavorite; i++) {
+    if(account_favorate_list[i].lat !== "") {
+      console.log('performance name: ' + account_favorate_list[i].performer_name);
+      console.log('performance lat: ' + account_favorate_list[i].lat);
+      console.log('performance lng: ' + account_favorate_list[i].long);
+      locations.push([account_favorate_list[i].performer_name, parseFloat(account_favorate_list[i].lat), parseFloat(account_favorate_list[i].long)]);
+    }
+    if(i==lengthLocFavorite-1) {
+      showMarkers();
+    }
+  }
+}
+
+
 function showMarkers() {
+
+  console.log("showMarkers");
 
   for(k=0, lengthLoc=locations.length; k<lengthLoc; k++) {
     console.log(locations[k]);

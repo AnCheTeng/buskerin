@@ -136,8 +136,8 @@ router.route('/favorite')
         found_Member.favorite = ObjectArrayUnique(found_Member.favorite, "num");
         found_Member.save()
         response.send(found_Member.favorite);
+        response.end();
       })
-
     })
   })
   .delete(parseUrlencoded, function(request, response) {
