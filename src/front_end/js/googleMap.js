@@ -71,6 +71,19 @@ function success(position) {
   });
 };
 
+function showAllBuskersOnMap() {
+  console.log('showAllBuskersOnMap');
+  $.ajax('http://'+ targetIP + '/busker/locateAllBuskers', {
+    type: 'GET',
+    success: function(result) {
+      if(!result) {
+        console.log('result lat: ' + result[0].lat);
+        console.log('result lat: ' + result[1].long);
+      }
+    }
+  });
+}
+
 function showMarkers() {
 
   console.log('showMarkers');

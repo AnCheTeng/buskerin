@@ -126,6 +126,7 @@ $(document).ready(function() {
 
     initMap();
 
+    showAllBuskersOnMap();
     // showMarkers();
 
     welcomingFlag = calLastVisitTime();

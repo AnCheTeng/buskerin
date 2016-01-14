@@ -112,6 +112,7 @@ router.route('/register')
         if (found_Member) {
           found_Member.lat = memberLocateLat;
           found_Member.long = memberLocateLong;
+          found_Member.save();
           response.send('0');
         } else {
           response.send('1');
@@ -120,8 +121,17 @@ router.route('/register')
       });
     });
 
-function randomIntFromInterval(min,max) {
-    return Math.floor(Math.random()*(max-min+1)+min);
+  router.route('/locateAllBuskers')
+    .get(function(request, response) {
+      Busker.find({
+        lat: { $exists: true, $nin: [ "" ] }
+      }).exec(function(err, foundData) {
+        response.send(foundData);
+      });
+    });
+
+  function randomIntFromInterval(min,max) {
+      return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 module.exports = router;
