@@ -3,6 +3,7 @@ var infoWindowww;
 var myLoc = {lat: 25.019818307021946, lng: 121.54214659134442};
 var infowindow = new google.maps.InfoWindow();
 var marker;
+var markers = [];
 var locations = [];
 var length, lengthLoc, lengthLocFavorite;
 
@@ -30,7 +31,7 @@ function showYourPosByMarker() {
 function success(position) {
 
   var i;
-
+  
   myLoc.lat = position.coords.latitude;
   myLoc.lng = position.coords.longitude;
   console.log('myLoc lat: ' + myLoc.lat);
@@ -50,6 +51,8 @@ function success(position) {
       infowindow.open(map, marker);
     }
   })(marker, i));
+
+  markers.push(marker);
 
   $.ajax('http://'+ targetIP + '/busker/locate', {
     type: 'POST',
@@ -107,10 +110,10 @@ function showAllFavoriteBuskersOnMap() {
 
   console.log('showAllFavoriteBuskersOnMap');
 
+  clearMarkers();
+
   locations = [];
   lengthLocFavorite = account_favorate_list.length;
-
-  console.log(account_favorate_list.length);
 
   for(var i=0; i<lengthLocFavorite; i++) {
     if(account_favorate_list[i].lat !== "") {
@@ -156,6 +159,8 @@ function showMarkers() {
        infowindow.open(map, marker);
      }
    })(marker, i));
+
+   markers.push(marker);
   }
 
   map.setZoom(14);
