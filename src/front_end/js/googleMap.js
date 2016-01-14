@@ -122,9 +122,12 @@ function showAllFavoriteBuskersOnMap() {
 function showMarkers() {
 
   console.log("showMarkers");
+  var infowindow_array = [];
 
   for(k=0, lengthLoc=locations.length; k<lengthLoc; k++) {
     console.log(locations[k]);
+    var temp_infowindow = new google.maps.InfoWindow();
+    infowindow_array[k] = temp_infowindow;
   }
 
   for (i = 0; i < locations.length; i++) {
@@ -132,6 +135,9 @@ function showMarkers() {
      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
      map: map
    });
+
+   infowindow_array[i].setContent(locations[i][0]);
+   infowindow_array[i].open(map, marker);
 
    google.maps.event.addListener(marker, 'click', (function(marker, i) {
      return function() {
@@ -142,6 +148,10 @@ function showMarkers() {
      }
    })(marker, i));
   }
+
+  map.setZoom(14);
+  map.setCenter(marker.getPosition());
+
 }
 
 function error() {
