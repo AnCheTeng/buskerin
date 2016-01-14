@@ -120,7 +120,7 @@ $(document).ready(function() {
       var search_category = $(this).data('category');
       $("#busker").trigger('click');
       $(".form-wrapper input").val(search_category);
-      setTimeout('$("#search_submit").trigger("click");',500)
+      setTimeout('$("#search_submit").trigger("click");',800)
 
     })
 
@@ -225,7 +225,7 @@ $(document).ready(function() {
       // timeout = setTimeout(function() {
       //     // do your stuff
       // }, 50);
-      if (($(window).scrollTop() + $(window).height() == $(document).height()) && context == "busker_list") {
+      if(($(window).scrollTop() + $(window).height() > $(document).height() - 500) && context == "busker_list")  {
         // append new buskers here
         idx = idx + 5;
         $.ajax(query_url + idx, {
