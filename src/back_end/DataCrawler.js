@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var request = require('request');
-var parser = require('xml2json');
+var jparser = require('xml2js').parseString;
 var Busker = require('./Model_Busker');
 var Member = require('./Model_Member');
 var util = require('util');
@@ -28,8 +28,14 @@ function crawler() {
     fs.readFile(xmlPath, {
       encoding: 'utf-8'
     }, function(err, data) {
-      var jsonObj = parser.toJson(data);
-      var buskerList = JSON.parse(jsonObj);
+      var jsonObj;
+      var buskerList;
+      jparser(data, function(err, result){
+      	buskerList = result;
+	console.log(typeof jsonObj);
+	//console.log(jsonObj);
+      });
+      //var buskerList = JSON.parse(jsonObj);
       var raw_array = buskerList.datas.Performer;
       // i < buskerList.datas.Performer.length
       raw_array = ObjectArrayUnique(raw_array, "performer_no");
